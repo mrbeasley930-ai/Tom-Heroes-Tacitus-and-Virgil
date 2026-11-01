@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heroes B1 — Roman anti-heroes: Sejanus and Mezentius</title>
+<style>
+  * { box-sizing:border-box; margin:0; padding:0; }
+  :root{
+    --gold:#f2cd6e; --gold-deep:#b8860b; --terra:#8f3320; --terra-soft:#a24230;
+    --olive:#4f7c3e; --marble:#f6eed6; --marble-2:#e8dab6; --edge:#cdb98c;
+    --ink:#2b2012; --ink-2:#43331e; --ink-3:#6a4620; --papyrus:#f3e6c4; --sepia:#6b3f1e;
+    --c-order:#b8860b; --c-sound:#4f7c3e; --c-structure:#3e5a7c; --c-word:#8f3320; --c-context:#6b4a7c;
+  }
+  html,body{ overflow-x:clip; }
+  body{ font-family:Georgia,'Palatino Linotype',serif; color:#f1e3c5; min-height:100vh; padding:20px; line-height:1.55; position:relative;
+    background:linear-gradient(180deg,#0b0f1c 0%,#1a2233 22%,#2f3646 44%,#4d3f34 68%,#2a1a10 100%); background-attachment:fixed; }
+  .scene{ position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background:radial-gradient(60% 40% at 50% 100%, rgba(233,170,90,.45), rgba(233,170,90,.12) 40%, rgba(233,170,90,0) 70%); }
+  .wrap{ max-width:1180px; margin:0 auto; position:relative; z-index:1; }
+
+  header{ text-align:center; margin-bottom:16px; padding-top:4px; }
+  .series{ font-size:12px; letter-spacing:3px; text-transform:uppercase; color:#dcc290; text-shadow:0 1px 3px rgba(0,0,0,.6); }
+  .logo{ font-size:40px; color:var(--gold); letter-spacing:4px; text-shadow:0 2px 10px rgba(0,0,0,.7),0 0 26px rgba(242,205,110,.35); line-height:1.15; margin-top:6px; }
+  .sub{ color:#f4e0b4; font-style:italic; margin-top:6px; font-size:17px; text-shadow:0 1px 4px rgba(0,0,0,.6); }
+  .strap{ color:#dcc290; font-size:13px; margin-top:4px; letter-spacing:.5px; }
+  .bookno{ display:inline-block; background:linear-gradient(135deg,#f2cd6e,#b8860b); color:#241806; font-weight:bold; border-radius:20px; padding:3px 14px; font-size:12.5px; letter-spacing:1.5px; margin-top:10px; }
+
+  .tablebar{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:center;
+    background:rgba(10,14,24,.68); backdrop-filter:blur(5px); border:1px solid rgba(242,205,110,.38); border-radius:10px; padding:9px 14px; margin-bottom:14px; box-shadow:0 6px 20px rgba(0,0,0,.35); font-size:13.5px; }
+  .tablebar .who{ color:#f0c766; }
+  .tablebar .sv{ color:#e2cb92; font-style:italic; }
+  .tablebar .sp{ flex:1; }
+  .btn{ padding:7px 13px; font-family:Georgia,serif; font-size:12.5px; font-weight:bold; cursor:pointer; border-radius:6px;
+    border:1.5px solid #c69a3c; background:transparent; color:#f1e3c5; transition:all .2s; }
+  .btn:hover{ background:rgba(242,205,110,.16); }
+  .btn.primary{ background:linear-gradient(135deg,#f2cd6e,#b8860b); color:#241806; border-color:transparent; }
+  .scorepill{ background:linear-gradient(135deg,#f2cd6e,#b8860b); color:#241806; font-weight:bold; border-radius:20px; padding:5px 14px; font-size:13px; }
+
+  .tabs{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:18px; }
+  .tab{ padding:9px 13px; font-family:Georgia,serif; font-size:13px; font-weight:bold;
+    background:linear-gradient(135deg,#31281a 0%,#1c1408 100%); color:#f1e3c5;
+    border:2px solid #c69a3c; border-radius:6px; cursor:pointer; transition:all .2s; box-shadow:0 3px 10px rgba(0,0,0,.3); }
+  .tab:hover{ box-shadow:0 0 14px rgba(242,205,110,.55); transform:translateY(-2px); }
+  .tab.active{ background:linear-gradient(135deg,#f2cd6e 0%,#b8860b 100%); color:#241806; }
+  .tab .done{ font-size:11px; color:#8fd8a6; margin-left:4px; }
+  .tab.active .done{ color:#241806; }
+  .panel{ display:none; } .panel.active{ display:block; animation:fade .35s ease; }
+  @keyframes fade{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;} }
+
+  .card{ position:relative; border:1px solid var(--edge); border-radius:12px; padding:22px 24px; margin-bottom:18px; color:var(--ink-2);
+    background:repeating-linear-gradient(118deg, rgba(120,90,50,.035) 0 7px, rgba(120,90,50,0) 7px 24px), linear-gradient(180deg,#f7efd9 0%,#eaddbb 100%);
+    box-shadow:0 16px 42px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.75); }
+  .card h2{ color:var(--terra); font-size:23px; margin-bottom:4px; letter-spacing:.3px; }
+  .card h3{ color:var(--ink-3); font-size:16.5px; margin:18px 0 8px; }
+  .card p{ margin-bottom:11px; }
+  .card .ref{ color:#8a6f44; font-size:13px; letter-spacing:1px; text-transform:uppercase; margin-bottom:8px; }
+  .card i{ color:#5a2e14; }
+  .note{ color:#7c6440; font-size:13px; font-style:italic; }
+  .small{ font-size:13px; color:#5a4a30; }
+
+  /* facts table */
+  details.facts{ margin:10px 0 14px; border:1px dashed #bda87a; border-radius:8px; background:rgba(255,255,255,.35); }
+  details.facts summary{ cursor:pointer; padding:9px 14px; font-weight:bold; color:#7a4a14; font-size:14px; }
+  details.facts table{ width:100%; border-collapse:collapse; font-size:13.5px; margin:0 0 4px; }
+  details.facts th, details.facts td{ border-top:1px solid #d9c9a0; padding:6px 12px; text-align:left; vertical-align:top; }
+  details.facts th{ width:26%; color:#7a4a12; background:rgba(184,134,11,.10); white-space:nowrap; }
+
+  /* legend */
+  .legend{ display:flex; flex-wrap:wrap; gap:8px 14px; align-items:center; font-size:12.5px; color:#5a4a30; margin:6px 0 12px; }
+  .legend .lg{ display:inline-flex; align-items:center; gap:6px; }
+  .legend .sw{ width:26px; height:14px; border-radius:3px; border-bottom:3px solid; }
+  .sw.order{ background:rgba(184,134,11,.22); border-color:var(--c-order); }
+  .sw.sound{ background:rgba(79,124,62,.20); border-color:var(--c-sound); }
+  .sw.structure{ background:rgba(62,90,124,.18); border-color:var(--c-structure); }
+  .sw.word{ background:rgba(143,51,32,.16); border-color:var(--c-word); }
+  .sw.context{ background:rgba(107,74,124,.16); border-color:var(--c-context); }
+
+  /* the side-by-side text */
+  .textwrap{ display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:16px; align-items:start; }
+  .text{ background:#fbf5e3; border:1px solid #cbb37f; border-left:5px solid var(--terra); border-radius:8px; overflow:hidden; }
+  .thead{ display:grid; grid-template-columns:52px 1.15fr 1fr; background:rgba(184,134,11,.14); color:#7a4a12; font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; padding:7px 10px; border-bottom:1px solid #d9c9a0; }
+  .row{ display:grid; grid-template-columns:52px 1.15fr 1fr; gap:0 14px; padding:9px 10px; border-bottom:1px solid #eadfbf; }
+  .row:last-child{ border-bottom:0; }
+  .row:nth-child(even){ background:rgba(255,255,255,.35); }
+  .row .ln{ color:#9a8256; font-size:11.5px; padding-top:5px; }
+  .row .lat{ font-size:15.5px; line-height:1.75; color:#2e2312; }
+  .row .lat .lb{ display:block; height:0; }
+  .row .lat .lb::after{ content:attr(data-n); display:inline-block; position:relative; left:-2px; color:#b39d6f; font-size:10px; vertical-align:top; }
+  .row .en{ font-size:14.5px; line-height:1.65; color:#4a3a22; }
+  mark.hl{ background:transparent; color:inherit; cursor:pointer; border-radius:3px; padding:1px 2px; border-bottom:2.5px solid; transition:background .15s, box-shadow .15s; }
+  mark.hl.order{ background:rgba(184,134,11,.22); border-color:var(--c-order); }
+  mark.hl.sound{ background:rgba(79,124,62,.20); border-color:var(--c-sound); }
+  mark.hl.structure{ background:rgba(62,90,124,.18); border-color:var(--c-structure); }
+  mark.hl.word{ background:rgba(143,51,32,.16); border-color:var(--c-word); }
+  mark.hl.context{ background:rgba(107,74,124,.16); border-color:var(--c-context); }
+  mark.hl:hover{ box-shadow:0 0 0 2px rgba(184,134,11,.35); }
+  mark.hl.on{ box-shadow:0 0 0 2.5px var(--terra); background:rgba(242,205,110,.45); }
+  mark.hl.read::after{ content:"✓"; font-size:9px; color:#4f7c3e; vertical-align:super; margin-left:1px; }
+
+  /* note panel */
+  .npanel{ position:sticky; top:14px; background:var(--papyrus); border:1px solid #cbb37f; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,.28); max-height:calc(100vh - 28px); overflow:auto; }
+  .npanel .nhead{ padding:10px 14px; background:rgba(184,134,11,.14); border-bottom:1px solid #d9c9a0; display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .npanel .nhead b{ color:#7a4a14; font-size:13px; letter-spacing:1px; text-transform:uppercase; }
+  .npanel .nhead .cnt{ font-size:12px; color:#8a6f44; }
+  .npanel .nbody{ padding:14px 16px 16px; font-size:14px; color:#3a2c18; }
+  .npanel .empty{ color:#8a7048; font-style:italic; font-size:13.5px; }
+  .chip{ display:inline-block; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:#fff; border-radius:12px; padding:2px 10px; margin-bottom:6px; }
+  .chip.order{ background:var(--c-order); } .chip.sound{ background:var(--c-sound); } .chip.structure{ background:var(--c-structure); } .chip.word{ background:var(--c-word); } .chip.context{ background:var(--c-context); }
+  .ntag{ font-size:17px; color:var(--terra); font-weight:bold; margin:2px 0 6px; line-height:1.3; }
+  .nlat{ font-style:italic; color:#5a2e14; font-size:15px; border-left:3px solid var(--gold-deep); padding-left:10px; margin:6px 0; }
+  .ntr{ color:#5a4a30; font-size:13.5px; margin-bottom:10px; padding-left:13px; }
+  .nsec{ font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:#7a4a14; margin:12px 0 4px; }
+  .nbody p{ margin-bottom:8px; line-height:1.55; }
+  .ex{ background:rgba(255,255,255,.55); border:1px solid #e0d1a8; border-radius:8px; padding:9px 11px; margin-bottom:8px; }
+  .ex .exh{ font-size:11.5px; color:#8a6f44; text-transform:uppercase; letter-spacing:1px; margin-bottom:3px; }
+  .ex .exh span{ color:#3a6b30; font-weight:bold; }
+  .ex p{ margin:0; font-size:13.5px; line-height:1.5; }
+  .nnav{ display:flex; gap:8px; justify-content:space-between; margin-top:12px; }
+  .nnav .btn{ color:#5a2e14; border-color:#b8955a; font-size:12px; padding:6px 10px; }
+  .nclose{ display:none; color:#5a2e14; border-color:#b8955a; font-size:12px; padding:5px 10px; }
+
+  /* questions */
+  .q{ background:#fbf5e3; border:1px solid #cbb37f; border-radius:8px; padding:14px 18px; margin:12px 0; }
+  .q .qtop{ display:flex; flex-wrap:wrap; gap:8px 12px; align-items:center; margin-bottom:6px; }
+  .q .qn{ font-weight:bold; color:var(--terra); }
+  .q .qm{ background:rgba(184,134,11,.16); border:1px solid var(--gold-deep); color:#7a4a14; border-radius:14px; padding:1px 10px; font-size:12px; }
+  .q .qt{ font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#8a6f44; }
+  .q .qtext{ font-size:15.5px; color:#33270f; margin-bottom:10px; }
+  textarea{ width:100%; min-height:96px; padding:10px 12px; border:1px solid #c9b686; border-radius:7px; background:#fffdf5; font-family:Georgia,serif; font-size:14.5px; line-height:1.5; color:#2b2012; resize:vertical; }
+  textarea:focus{ outline:2px solid rgba(184,134,11,.45); }
+  textarea[readonly]{ background:#f1e9d3; color:#4a3a22; }
+  .qbar{ display:flex; flex-wrap:wrap; gap:8px 12px; align-items:center; margin-top:8px; font-size:12.5px; color:#7c6440; }
+  .qbar .btn{ color:#3a6b30; border-color:var(--olive); }
+  .qbar .btn.rev{ color:#5a2e14; border-color:#b8955a; }
+  .qbar .wc{ font-style:italic; }
+  .model{ display:none; margin-top:10px; border-top:1px dashed #cbb37f; padding-top:10px; }
+  .model.show{ display:block; }
+  .model .mh{ font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:#3a6b30; margin-bottom:4px; }
+  .model .mtext{ background:rgba(79,124,62,.10); border-left:4px solid var(--olive); padding:9px 12px; border-radius:6px; font-size:14px; color:#2e2312; margin-bottom:8px; }
+  .model ul{ margin:0 0 8px 20px; font-size:13px; color:#5a4a30; }
+  .model li{ margin-bottom:3px; }
+  .selfmark{ display:flex; flex-wrap:wrap; gap:6px; align-items:center; font-size:13px; color:#5a4a30; }
+  .mk{ width:34px; height:30px; border-radius:6px; border:1.5px solid #b8955a; background:#fff; color:#5a2e14; font-family:Georgia,serif; font-weight:bold; cursor:pointer; }
+  .mk.on{ background:var(--olive); color:#f4ead4; border-color:var(--olive); }
+  .unlock{ font-size:12px; color:#8a6f44; text-decoration:underline; cursor:pointer; }
+
+  /* guidance */
+  .gitem{ border-left:4px solid var(--gold-deep); background:rgba(255,255,255,.4); padding:10px 14px; border-radius:0 8px 8px 0; margin-bottom:10px; }
+  .gitem h4{ color:var(--terra); font-size:15px; margin-bottom:4px; }
+  .gitem p{ margin:0; font-size:14px; }
+  .themebox{ background:rgba(184,134,11,.10); border:1px solid var(--gold-deep); border-radius:8px; padding:12px 16px; margin:12px 0; font-size:14px; }
+
+  .rag{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:8px; }
+  .rag button{ padding:7px 14px; border-radius:20px; border:2px solid; font-family:Georgia,serif; font-weight:bold; cursor:pointer; background:#fff; font-size:13px; }
+  .rag .r{ color:#a12016; border-color:#a12016; } .rag .a{ color:#a8741f; border-color:#a8741f; } .rag .g{ color:#3a6b30; border-color:#3a6b30; }
+  .rag button.on.r{ background:#a12016; color:#fff; } .rag button.on.a{ background:#a8741f; color:#fff; } .rag button.on.g{ background:#3a6b30; color:#fff; }
+
+  .progress{ display:flex; flex-wrap:wrap; gap:8px 18px; font-size:13px; color:#5a4a30; margin:0 0 10px; }
+  .progress b{ color:var(--terra); }
+  .foot{ text-align:center; color:#b9a37a; font-size:12px; margin:24px 0 8px; }
+
+  @media (max-width:900px){
+    body{ padding:12px; }
+    .textwrap{ grid-template-columns:1fr; }
+    .npanel{ position:fixed; left:0; right:0; bottom:0; top:auto; max-height:70vh; border-radius:14px 14px 0 0; z-index:60; transform:translateY(105%); transition:transform .25s ease; }
+    .npanel.open{ transform:none; }
+    .nclose{ display:inline-block; }
+    .row{ grid-template-columns:40px 1fr; }
+    .row .en{ grid-column:2; margin-top:6px; padding-top:6px; border-top:1px dotted #d9c9a0; }
+    .thead{ display:none; }
+    .logo{ font-size:28px; letter-spacing:2px; }
+  }
+  @media print{
+    body{ background:#fff; color:#000; padding:0; }
+    .scene, .tablebar, .tabs, .npanel, .btn, .rag, .nnav{ display:none !important; }
+    .panel{ display:block !important; page-break-before:always; }
+    .panel:first-of-type{ page-break-before:auto; }
+    .card{ box-shadow:none; background:#fff; border-color:#999; }
+    .textwrap{ grid-template-columns:1fr; }
+    .logo, .sub, .strap, .series{ color:#000; text-shadow:none; }
+    mark.hl{ border-bottom:1.5px solid #333; background:transparent !important; }
+    .model{ display:block; }
+  }
+</style>
+</head>
+<body>
+<div class="scene"></div>
+<div class="wrap">
+  <header>
+    <div class="series" id="h-series"></div>
+    <div class="logo" id="h-title"></div>
+    <div class="sub" id="h-sub"></div>
+    <div class="strap" id="h-strap"></div>
+    <div class="bookno" id="h-bookno"></div>
+  </header>
+
+  <div class="tablebar">
+    <span class="who" id="whoami">Not signed in</span>
+    <span class="sv" id="savestatus"></span>
+    <span class="sp"></span>
+    <span class="scorepill" id="pill">0 answered</span>
+    <button class="btn" onclick="window.print()">Print / PDF</button>
+    <button class="btn" onclick="signOut()">Sign out</button>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+  <div id="panels"></div>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script>
+/* =====================================================================
+   HEROES & VILLAINS · BOOKLET 1 · Roman anti-heroes: Sejanus and Mezentius
+   Content file. The shell (shell.html) renders everything from this object.
+   Highlight markup inside `lat`:  [[id|Latin text]]  — id must exist in `notes`.
+   Categories: order (word order & position) · sound (sound & rhythm) ·
+               structure (sentence shape & syntax) · word (choice of words) ·
+               context (AO2 fact the exam can ask for)
+   ===================================================================== */
+const BOOKLET = {
+  id: "HVB1", book: "hvtom27-b1", num: 1,
+  series: "Eduqas GCSE Latin · Component 2 · Heroes and Villains (2027–29)",
+  title: "Roman anti-heroes",
+  subtitle: "Sejanus and Mezentius",
+  strap: "Tacitus, <i>Annals</i> 4.1 and 4.59 · Virgil, <i>Aeneid</i> 8.478–495",
+  gateLine: "Three villains, two writers, one question: how does a Roman make you hate a man?",
+  firstBooklet: true,
+
+  /* ---------- The theme question this booklet feeds ---------- */
+  themeNote: "The specification names three ideas the examiners can build a 16-mark essay around: <b>the characteristics of a Roman hero</b>, <b>can women be heroes?</b>, and <b>Roman anti-heroes</b>. This booklet is the third of those. Sejanus and Mezentius are two of the four 'villains' in the Resource Booklet (the others are Antony in Cicero and Sempronia in Sallust). Everything you read here is evidence for the villain side of an essay, and for the question of whether a villain can do a heroic thing.",
+
+  passages: [
+  /* =================================================================
+     PASSAGE 1 · Tacitus, Annals 4.1
+     ================================================================= */
+  { id:"tac1", short:"1 · Sejanus: the portrait", author:"Tacitus", work:"<i>Annals</i> 4.1", lines:"lines 1–11",
+    heading:"Sejanus: the portrait",
+    intro:"Tacitus opens Book 4 of the <i>Annals</i> (AD 23) by stopping the story to sketch the man who is about to dominate it. Lucius Aelius Seianus, Prefect of the Praetorian Guard, will control access to Tiberius after the emperor leaves Rome for Capri in AD 26, will be the most feared man in the empire, and will be denounced and executed in AD 31. Tacitus writes every line knowing that ending. The passage has a shape: a sentence of introduction, a career, the grip on Tiberius, the real cause, and then a verbless list of qualities in which every apparent virtue is a disguise.",
+    facts:[
+      ["Full name","Lucius Aelius Seianus, born at Vulsinii (modern Bolsena) in Etruria; father a Roman <i>eques</i>, so the family was equestrian, not senatorial"],
+      ["Early career","Attached himself to Gaius Caesar, grandson of Augustus and one of his intended heirs (Gaius died AD 4)"],
+      ["Under Tiberius","Prefect of the Praetorian Guard (the emperor's bodyguard, the only troops in Rome); Tiberius' most trusted adviser"],
+      ["AD 26","Tiberius leaves Rome for Campania and then Capri; Sejanus controls who reaches him"],
+      ["AD 31","Denounced to the senate by letter from Tiberius, executed the same day; his children killed"],
+      ["Tacitus' angle","Writing c. AD 115, hostile to the imperial system; famous for brevity, omitted verbs, abstract nouns, and the epigram that stings at the end of a sentence"]
+    ],
+    rows:[
+      { ln:"1", lat:"[[t1a|nunc Seiani originem, mores expediam.]]",
+        en:"Now I shall set out the origin and character of Sejanus." },
+      { ln:"1–3", lat:"[[t1b|genitus Vulsiniis patre / equite Romano]], et cum iuvenis esset [[t1c|divi Augusti nepotem / sectatus est]].",
+        en:"Born at Vulsinii, his father being a Roman knight, when he was a young man he attached himself to the grandson of the deified Augustus." },
+      { ln:"3–5", lat:"mox Seianus Tiberium [[t1d|variis artibus devinxit]] adeo ut / imperatorem [[t1e|obscurum adversum alios sibi uni incautum / intectumque]] efficeret,",
+        en:"Soon Sejanus bound Tiberius to himself by various tricks, to such an extent that he made an emperor who was secretive towards everyone else off his guard and unprotected towards himself alone," },
+      { ln:"5–7", lat:"[[t1f|non tam sollertia (quippe isdem artibus victus / est) quam deorum ira in rem Romanam]], [[t1g|cuius pari exitio viguit / ceciditque]].",
+        en:"not so much through cleverness (for indeed he was beaten by those same tricks) as through the anger of the gods against the Roman state, to whose equal ruin he both flourished and fell." },
+      { ln:"7–8", lat:"[[t1h|corpus illi laborum tolerans, animus audax]]; [[t1i|sui obtegens, / in alios criminator]]; [[t1j|iuxta adulatio et superbia]];",
+        en:"He had a body able to endure hardships and a bold mind; secretive about himself, an accuser of others; flattery and arrogance side by side;" },
+      { ln:"8–11", lat:"[[t1k|palam compositus / pudor, intus summa apiscendi libido]], eiusque causa [[t1l|modo largitio et / luxus, saepius industria ac vigilantia]], [[t1m|haud minus noxiae quotiens / parando regno finguntur]].",
+        en:"outwardly a composed modesty, inwardly a supreme craving to get hold of power, and for its sake at one time generosity and extravagance, more often hard work and watchfulness — qualities no less harmful whenever they are feigned for the winning of royal power." }
+    ],
+    notes:{
+      t1a:{ cat:"structure", tag:"The historian steps forward", tr:"Now I shall set out the origin and character of Sejanus.",
+        what:"<i>expediam</i> is first person and future: Tacitus interrupts the year-by-year narrative to speak in his own voice, and the verb literally means 'unravel' or 'disentangle' (<i>ex</i> + <i>pes</i>, to free the feet). <i>originem, mores</i> are set side by side with no 'and' (asyndeton): where he came from, and what he was like. The sentence is a signpost that a formal character sketch is coming, of the kind Sallust wrote for Catiline.",
+        effect:"The reader is told to sit up: the story stops because this man matters. Choosing 'unravel' rather than 'describe' hints that Sejanus is a knot, something tangled that needs the historian's skill to lay open. The plain, short sentence also sets up the shock of the long, verbless list that follows.",
+        ex:{ style:"Tacitus signals the importance of Sejanus by breaking off the narrative with <i>nunc Seiani originem, mores expediam</i>, 'now I shall set out the origin and character of Sejanus': the first-person future verb puts the historian's own authority behind the portrait, and the verb <i>expediam</i>, literally 'unravel', suggests that Sejanus is a puzzle that has to be untangled before the reader can understand the years that follow.",
+             content:"We learn that Tacitus is deliberately pausing his account to describe Sejanus' background and character, which shows how central he considers Sejanus to be to the events of Tiberius' reign.",
+             essay:"Tacitus stops his narrative to give Sejanus a formal character sketch, the treatment historians normally reserve for the great villains of Rome such as Sallust's Catiline, so even before any deeds are described the reader is prepared to see him as a threat rather than a hero." } },
+      t1b:{ cat:"context", tag:"Where he came from", tr:"Born at Vulsinii, his father a Roman knight",
+        what:"<i>genitus</i> has no <i>est</i>: Tacitus regularly drops parts of <i>esse</i>, and the clipped opening reads like an entry in a file. Vulsinii is an Etruscan town (modern Bolsena); <i>patre equite Romano</i> is an ablative of origin. An <i>eques</i> was wealthy and respectable but not a senator. Sejanus was therefore an outsider to the senatorial class that Tacitus belonged to and wrote for.",
+        effect:"Two facts, no comment, and yet a Roman reader hears the judgement: a provincial equestrian will end up controlling the emperor. The bareness of the line makes the rise that follows seem more improper, and it is a fact the examiners can ask for directly.",
+        ex:{ style:"The character sketch begins with the bare facts <i>genitus Vulsiniis patre equite Romano</i>, 'born at Vulsinii, his father a Roman knight', with the verb <i>est</i> omitted, so that the opening reads like an official record and quietly reminds the reader that a man of equestrian rank from an Etruscan town is about to master the emperor of Rome.",
+             content:"Sejanus was born at Vulsinii, an Etruscan town, and his father was a Roman knight (an <i>eques</i>), so he came from the equestrian class rather than the senatorial aristocracy.",
+             essay:"Tacitus makes a point of Sejanus' origins, an equestrian from the Etruscan town of Vulsinii, so that his later power looks like a usurpation of a place that a Roman aristocrat would think he had no right to." } },
+      t1c:{ cat:"word", tag:"A hanger-on's verb", tr:"he attached himself to the grandson of the deified Augustus",
+        what:"The grandson is Gaius Caesar, Augustus' adopted heir, who died in AD 4. <i>sectatus est</i> is a deponent (active in meaning) from <i>sector</i>, the frequentative of <i>sequor</i>: not 'followed' once but 'kept following about', the word for a client trailing a patron, even for a hunter after game. <i>divi Augusti</i> reminds us that Augustus was deified after death: this is the imperial family at its most sacred.",
+        effect:"From his first appearance Sejanus is a climber choosing whom to attach himself to. The verb hints that the attachment was calculated, and that when Gaius died he simply transferred it: the next sentence begins <i>mox Seianus Tiberium</i>.",
+        ex:{ style:"Tacitus chooses the verb <i>sectatus est</i>, 'attached himself to', for Sejanus' early career: a frequentative verb used of clients trailing after a patron, so that his loyalty to Gaius Caesar looks like the tactics of a hanger-on, and the reader is ready for him to transfer that attention to Tiberius as soon as Gaius is dead.",
+             content:"As a young man Sejanus attached himself to Gaius Caesar, the grandson of the deified emperor Augustus.",
+             essay:"Sejanus' career begins with him trailing after Augustus' grandson Gaius, and Tacitus presents this not as loyalty but as the first move of a man who chooses his patrons for what they can give him." } },
+      t1d:{ cat:"word", tag:"Bound fast", tr:"bound Tiberius to himself by various tricks",
+        what:"<i>devinxit</i> is from <i>devincio</i>, 'to tie up, bind fast', a word for ropes and chains used metaphorically of obligation. <i>variis artibus</i> is an ablative of instrument: <i>artes</i> can be honest skills or dishonest tricks, and the same phrase returns as <i>isdem artibus</i> in line 5, when the tricks are turned against him. Note the word order: <i>Seianus Tiberium</i> side by side, the prefect placed before the emperor.",
+        effect:"The emperor is the one who ends up tied. The metaphor turns the relationship upside down: the servant binds the master. The reader is also being set up for the irony of line 5, where the binder is bound by the same means.",
+        ex:{ style:"The metaphor in <i>variis artibus devinxit</i>, 'bound him by various tricks', presents the emperor as a captive: <i>devinxit</i> is the word for tying with ropes, and by placing <i>Seianus Tiberium</i> side by side with the prefect first, Tacitus lets the word order show who now controls whom.",
+             content:"Sejanus won Tiberius over so completely by a variety of clever methods that the emperor became careless and unguarded towards him alone.",
+             essay:"Tacitus describes Sejanus as having 'bound' Tiberius by tricks, a metaphor that makes the emperor a prisoner of his own prefect and marks Sejanus out as a manipulator rather than a loyal servant." } },
+      t1e:{ cat:"order", tag:"Chiasmus: everyone else against Sejanus alone", tr:"secretive towards everyone else, but towards him alone off his guard and unprotected",
+        what:"Two pairs arranged in a cross (chiasmus): adjective + <i>adversum alios</i> / <i>sibi uni</i> + adjectives. <i>obscurum</i> and <i>incautum intectumque</i> are opposites, and <i>alios</i> and <i>sibi uni</i> sit next to each other in the centre for maximum contrast. <i>intectus</i>, literally 'uncovered', is used nowhere else in Latin in this sense; with <i>incautum</i> it makes an alliterating pair.",
+        effect:"Tiberius, famous for hiding his thoughts from everyone, is naked before one man. The crossing word order puts the whole court on one side and Sejanus on the other, and the coined word <i>intectum</i> makes the emperor sound physically exposed, like a man without armour.",
+        ex:{ style:"Tacitus uses chiasmus in <i>obscurum adversum alios sibi uni incautum intectumque</i>, 'secretive towards everyone else, but towards him alone off his guard and unprotected': the contrasting words <i>alios</i> and <i>sibi uni</i> are placed side by side at the centre, so that the whole of Rome stands on one side and Sejanus alone on the other, and the unusual word <i>intectum</i>, 'uncovered', makes the emperor sound physically defenceless.",
+             content:"Tiberius was normally secretive towards everyone else, but towards Sejanus alone he became careless and unguarded.",
+             essay:"Tacitus stresses that Tiberius, secretive with everyone else, was 'unguarded' towards Sejanus alone, which shows the villain's real skill: he did not seize power, he made the most suspicious man in Rome trust him." } },
+      t1f:{ cat:"structure", tag:"The real cause, and the fall foretold", tr:"not so much through cleverness (for he was beaten by those same tricks) as through the anger of the gods against the Roman state",
+        what:"<i>non tam ... quam</i> corrects the explanation: not cleverness, but divine anger. The parenthesis <i>quippe isdem artibus victus est</i> leaps eight years ahead to the fall of AD 31, when Tiberius outwitted him with a letter to the senate. <i>deorum ira</i>: Tacitus often treats the gods as hostile to Rome, and here their target is <i>res Romana</i>, the state, not Sejanus himself. <i>sollertia</i> implies calculating shrewdness rather than intelligence.",
+        effect:"The reader knows the ending before the portrait is finished, so every quality that follows is read with the knowledge that it did not save him. Making the gods' anger the cause also enlarges the story: Sejanus is not just a bad man but a punishment sent on Rome.",
+        ex:{ style:"In <i>non tam sollertia ... quam deorum ira in rem Romanam</i>, 'not so much through cleverness as through the anger of the gods against the Roman state', Tacitus corrects the obvious explanation for Sejanus' rise, and the parenthesis <i>quippe isdem artibus victus est</i>, 'for he was beaten by those same tricks', foretells his fall in the very sentence that describes his success, so that the reader cannot admire the rise without seeing the ruin.",
+             content:"Tacitus says Sejanus' success was due not so much to his cleverness as to the anger of the gods against Rome, and he adds that Sejanus was later defeated by the same tricks he had used himself.",
+             essay:"Tacitus refuses to let Sejanus' rise be a story of talent: he says it happened because the gods were angry with Rome, which turns the villain into a disaster visited on the state rather than a man who earned his position." } },
+      t1g:{ cat:"word", tag:"Epigram: rise and fall in two verbs", tr:"to whose equal ruin he both flourished and fell",
+        what:"<i>viguit ceciditque</i> compresses a whole career into two perfect verbs joined by <i>-que</i>: 'he flourished and fell'. <i>pari exitio</i> is an ablative of attendant circumstances: the state was ruined equally by his rise and by his fall (the purge after AD 31 killed many more). This is a Tacitean epigram, a pointed short phrase closing a sentence.",
+        effect:"The compression makes the fall seem to follow the rise almost instantly, as if they were one event. And the point is not sympathy: whether up or down, Sejanus destroyed Rome. The reader is being told how to feel before any evidence arrives.",
+        ex:{ style:"The epigram <i>cuius pari exitio viguit ceciditque</i>, 'to whose equal ruin he both flourished and fell', compresses Sejanus' whole career into two verbs, and the phrase <i>pari exitio</i> insists that Rome suffered as much from his rise as from his fall, so that the reader is denied any admiration for his success.",
+             content:"Tacitus says that Sejanus' rise and his fall did equal damage to the Roman state.",
+             essay:"For Tacitus a villain is measured by damage to the state, and he says plainly that Sejanus' rise and fall brought Rome 'equal ruin', which is the opposite of the hero's test, where Horatius or Augustus is judged by what he saves." } },
+      t1h:{ cat:"structure", tag:"A list without verbs", tr:"a body able to endure hardships, a bold mind",
+        what:"From here to the end of line 11 there is not a single main verb: <i>erat</i> or <i>inerat ei</i> has to be supplied throughout (ellipsis). <i>corpus</i> and <i>animus</i>, body and mind, are set against each other; <i>laborum</i> is an objective genitive after <i>tolerans</i>. <i>audax</i> looks like praise but in Latin usually means reckless and lawless, the word used of Catiline.",
+        effect:"Without verbs the sketch reads like a charge sheet, quality after quality with nothing to soften it. The pace is clipped and the tone is cold. And even the first, physical virtue, the body that can take hardship, is the quality Sejanus will use in the cave (4.59).",
+        ex:{ style:"Tacitus strips out every verb in <i>corpus illi laborum tolerans, animus audax</i>, 'a body able to endure hardships, a bold mind', so that the character sketch reads like a list of charges rather than a description, and the adjective <i>audax</i>, which in Latin implies recklessness rather than courage, turns the one physical virtue he allows Sejanus into a warning.",
+             content:"Sejanus had a body that could endure hard work and a bold, daring mind.",
+             essay:"Even the qualities a hero would be praised for, physical toughness and daring, are given to Sejanus in a cold, verbless list, and Tacitus' word for daring, <i>audax</i>, is the one Romans used of the traitor Catiline." } },
+      t1i:{ cat:"order", tag:"Himself against others", tr:"secretive about himself, an accuser of others",
+        what:"<i>sui</i> and <i>alios</i> are set against each other (antithesis), and Tacitus varies the grammar deliberately (<i>variatio</i>): a participle with an objective genitive, <i>sui obtegens</i>, is balanced by a noun with a prepositional phrase, <i>in alios criminator</i>. <i>criminator</i>, 'accuser', is a very rare word.",
+        effect:"Five words give a man with two faces: he hides everything about himself while exposing everyone else. The rare noun <i>criminator</i> makes accusation his profession, and this is exactly what he did, using treason trials to destroy rivals. Asyndeton (no 'and') keeps the pairs falling like blows.",
+        ex:{ style:"The antithesis <i>sui obtegens, in alios criminator</i>, 'secretive about himself, an accuser of others', sets <i>sui</i> against <i>alios</i> to show a man of two faces, and the rare noun <i>criminator</i> makes accusing people his occupation, which is precisely how Sejanus used the treason trials against his enemies.",
+             content:"Sejanus concealed everything about himself while accusing other people.",
+             essay:"Tacitus calls Sejanus 'an accuser of others' who hid everything about himself, the portrait of an informer, and no Roman could think an informer heroic." } },
+      t1j:{ cat:"order", tag:"Juxtaposition made literal", tr:"flattery and arrogance side by side",
+        what:"<i>iuxta</i> is an adverb, 'side by side, together', and the two abstract nouns that follow are opposites that could not normally live in one man: grovelling flattery and haughty pride. Tacitus is fond of pairing opposites like this. The point is that they were aimed at different people: flattery upwards to Tiberius, arrogance downwards to everyone else.",
+        effect:"The word <i>iuxta</i> tells the reader that the placing is the point: the contradiction is physically set in front of us. The reader sees a man whose behaviour depends entirely on who is watching.",
+        ex:{ style:"Tacitus makes the juxtaposition literal in <i>iuxta adulatio et superbia</i>, 'flattery and arrogance side by side': the adverb <i>iuxta</i> draws attention to the placing of two opposite qualities, fawning to those above him and contempt for those below, so that Sejanus' character is shown to change according to who is watching.",
+             content:"Sejanus combined flattery (towards his superiors) with arrogance (towards everyone else).",
+             essay:"Sejanus' 'flattery and arrogance side by side' is the mark of the courtier-villain: he treats the emperor and the rest of Rome in opposite ways, whereas Livy's Horatius behaves the same towards everyone." } },
+      t1k:{ cat:"order", tag:"Outside against inside", tr:"outwardly a composed modesty, inwardly a supreme craving for power",
+        what:"<i>palam</i> ('openly') and <i>intus</i> ('within') are placed first in their phrases and set against each other. <i>compositus</i> can mean 'calm' but with <i>palam</i> it means 'put together, contrived': a modesty that was an act. <i>libido</i> is a violent word, uncontrolled lust; <i>summa</i> is neuter plural, 'the highest things', i.e. supreme power; <i>apiscendi</i> is a rare simple verb where <i>adipiscendi</i> would be usual.",
+        effect:"This is the key to the whole portrait: surface against interior. What Rome saw was a performance; what drove him was appetite. The strong sexual colouring of <i>libido</i> makes the desire for power sound like a disease, and the reader is told to distrust everything visible about him, including the courage in the cave.",
+        ex:{ style:"The antithesis of <i>palam compositus pudor, intus summa apiscendi libido</i>, 'outwardly a composed modesty, inwardly a supreme craving for power', places <i>palam</i> and <i>intus</i> at the head of each phrase to divide the man into surface and interior, and the word <i>libido</i>, normally used of lust, makes his ambition sound like an appetite he cannot control.",
+             content:"On the outside Sejanus showed a calm, apparently modest manner, but inside he was consumed by a desire to gain supreme power.",
+             essay:"Tacitus' central charge is that Sejanus' modesty was 'put on' while inside he craved supreme power, so that any apparently heroic act, including saving Tiberius' life, has to be read as part of the performance." } },
+      t1l:{ cat:"structure", tag:"Good qualities in a bad cause", tr:"at one time generosity and extravagance, more often hard work and watchfulness",
+        what:"Two balanced pairs, marked <i>modo</i> ... <i>saepius</i> ('sometimes ... more often'), the first alliterating (<i>largitio et luxus</i>). <i>eiusque causa</i> ties all four to the craving for power: everything was done 'for its sake'. <i>industria ac vigilantia</i> are the virtues Romans praised most in a public man, and Tacitus deliberately lists them alongside the vices.",
+        effect:"The reader is being taught to distrust virtue itself. Hard work and watchfulness are good in a consul and terrifying in a man who wants a throne, because they make him effective. Tacitus is preparing the sting of the last clause.",
+        ex:{ style:"Tacitus balances two pairs, <i>modo largitio et luxus, saepius industria ac vigilantia</i>, 'at one time generosity and extravagance, more often hard work and watchfulness', and by attaching them all to <i>eiusque causa</i>, 'for its sake', he makes the reader see even Sejanus' genuine virtues of diligence as tools of his ambition.",
+             content:"For the sake of gaining power Sejanus was sometimes generous and extravagant, and more often hard-working and watchful.",
+             essay:"Tacitus even lists Sejanus' hard work and vigilance, qualities Romans admired in a magistrate, and then says they were 'no less harmful' because they served his ambition: the villain is more dangerous, not less, for possessing a hero's virtues." } },
+      t1m:{ cat:"word", tag:"The sting: feigned for a throne", tr:"no less harmful whenever they are feigned for the winning of royal power",
+        what:"<i>haud minus noxiae</i> is feminine plural agreeing with <i>industria ac vigilantia</i>: the virtues are 'no less harmful' than the vices. <i>finguntur</i>, present tense, is a general truth about anyone who fakes virtue; <i>quotiens</i>, 'whenever', implies repeated performances. <i>parando regno</i> is a gerundive of purpose, and <i>regnum</i>, kingship, is the most hated word in Roman politics, the thing the Republic was founded to abolish.",
+        effect:"The sentence ends on the two most damning words available, <i>regno</i> and <i>finguntur</i>: he wanted a throne, and everything good about him was a fake. This is the Tacitean epigram: a short, pointed clause at the end of a long sentence that changes the meaning of everything before it.",
+        ex:{ style:"The passage ends on an epigram, <i>haud minus noxiae quotiens parando regno finguntur</i>, 'no less harmful whenever they are feigned for the winning of royal power': the last two words carry the whole charge, <i>regno</i> naming the kingship that every Roman was taught to hate and <i>finguntur</i> exposing his virtues as an act, so that the reader looks back over the list and trusts none of it.",
+             content:"Tacitus says that Sejanus' good qualities were just as harmful as his bad ones, because they were only pretended in order to win supreme (royal) power.",
+             essay:"The word Tacitus ends on is <i>regnum</i>, kingship: Sejanus wanted the one thing a Roman could not want, and that single ambition is enough to make him a villain in Roman eyes regardless of his courage or ability." } }
+    },
+    questions:[
+      { id:"q1", marks:2, type:"content", q:"Lines 1–3 (<i>nunc ... sectatus est</i>): give <b>two</b> facts that Tacitus tells us about Sejanus' background.",
+        model:"Any two of: he was born at Vulsinii; his father was a Roman knight (an <i>eques</i>); as a young man he attached himself to Gaius Caesar, the grandson of the deified Augustus.",
+        scheme:["One mark for each fact, taken from within lines 1–3.","'Born in Etruria' is acceptable for Vulsinii; 'followed / was a follower of Augustus' grandson' is acceptable.","No mark for facts from later in the passage (e.g. that he won over Tiberius)."] },
+      { id:"q2", marks:2, type:"latin", q:"Lines 3–5 (<i>mox ... efficeret</i>): pick out and translate the Latin word which shows that Tiberius normally hid his thoughts from other people.",
+        model:"<i>obscurum</i> — 'secretive' / 'inscrutable' / 'hidden' (towards others).",
+        scheme:["One mark for the Latin word copied exactly (<i>obscurum</i>).","One mark for a translation that carries the idea of hiding or secrecy; 'dark' or 'obscure' alone is not enough."] },
+      { id:"q3", marks:3, type:"content", q:"Lines 5–7 (<i>non tam ... ceciditque</i>): what does Tacitus say was the real reason for Sejanus' success, and what two things does he tell us about Sejanus' downfall?",
+        model:"The real reason was the anger of the gods against the Roman state (rather than Sejanus' own cleverness). About his downfall: he was defeated by the same tricks he had used himself; and his fall, like his rise, brought equal ruin to the state.",
+        scheme:["1 mark: anger of the gods against Rome (must be against the state / Rome; 'gods were angry with Sejanus' is wrong).","1 mark: beaten / defeated by the same tricks or methods.","1 mark: his fall damaged Rome as much as his rise did."] },
+      { id:"q4", marks:6, type:"style", q:"Lines 7–11 (<i>corpus illi ... finguntur</i>): how does Tacitus' style in these lines make Sejanus seem dangerous and untrustworthy? Make <b>three</b> points and refer to the Latin.",
+        model:"<b>1.</b> There is no main verb anywhere in these lines (<i>corpus illi laborum tolerans, animus audax</i>, 'a body able to endure hardships, a bold mind'): the qualities are thrown down one after another like items on a charge sheet, and the cold, clipped pace makes Sejanus seem calculated rather than human. <b>2.</b> Tacitus builds the sketch out of opposites placed against each other: <i>sui obtegens, in alios criminator</i>, 'secretive about himself, an accuser of others', and <i>palam compositus pudor, intus summa apiscendi libido</i>, 'outwardly a composed modesty, inwardly a supreme craving for power'. The antithesis of <i>palam</i> and <i>intus</i> divides the man into a surface and an interior, so that nothing visible about him can be trusted. <b>3.</b> The strong word <i>libido</i>, normally used of lust, makes his ambition an uncontrollable appetite, and the epigram that closes the passage, <i>quotiens parando regno finguntur</i>, 'whenever they are feigned for the winning of royal power', ends on the two most damning words in Roman politics: his virtues were an act (<i>finguntur</i>) and their aim was a throne (<i>regno</i>). (Also creditable: <i>iuxta adulatio et superbia</i>, flattery and arrogance literally 'side by side'; <i>audax</i> meaning reckless; the alliteration of <i>largitio et luxus</i>; even good qualities called <i>haud minus noxiae</i>.)",
+        scheme:["Two marks per point: Latin quoted + what Tacitus does with it + the effect, linked to 'dangerous' or 'untrustworthy'.","Naming a device (antithesis, asyndeton) without explaining its effect on the reader scores one mark at most for that point.","All Latin must come from lines 7–11."] },
+      { id:"q5", marks:2, type:"interp", q:"What impression do you get of Tacitus' attitude to Sejanus from this passage? Give <b>one</b> reason for your answer.",
+        model:"Tacitus is openly hostile: he presents Sejanus as a fraud whose apparent virtues (modesty, hard work) were faked in order to win supreme power, and he says his career brought ruin to Rome. (Any impression supported by a reason from the passage is creditable: e.g. contempt, because he calls him an accuser of others; or that Tacitus sees him as a punishment from the gods on Rome.)",
+        scheme:["1 mark for a clear impression (hostile, contemptuous, suspicious, condemning).","1 mark for a reason grounded in the passage. An impression with no reason scores 1 at most."] }
+    ]
+  },
+
+  /* =================================================================
+     PASSAGE 2 · Tacitus, Annals 4.59
+     ================================================================= */
+  { id:"tac2", short:"2 · Sejanus: the cave", author:"Tacitus", work:"<i>Annals</i> 4.59", lines:"lines 12–21",
+    heading:"Sejanus: the cave at Spelunca",
+    intro:"AD 26. Tiberius has left Rome, beginning the retirement from which he will never return, and is travelling through Campania with Sejanus beside him. Tacitus has just told us that one motive for the journey was Sejanus' own encouragement. Then, at a dinner in a villa built into a natural cave, the roof comes down. This is the one episode in the prescribed text where Sejanus does something that looks like heroism, and Tacitus lets us see it clearly, with the portrait of 4.1 already in our heads.",
+    facts:[
+      ["When","AD 26, in the days after Tiberius left Rome for Campania (he would settle on Capri in AD 27 and never come back)"],
+      ["Where","A villa called Spelunca, 'the Cave', on the coast between the bay of Amyclae and the hills of Fundi; the dining room was inside a natural grotto (the modern town is Sperlonga, and the cave with its sculptures can still be visited)"],
+      ["What happened","Rocks fell from the mouth of the cave and crushed some of the servants; the other guests fled"],
+      ["What Sejanus did","Crouched over Tiberius on his knees and hands, taking the falling rocks on his own back, and was found like that by the soldiers who came to help"],
+      ["Result","Tiberius trusted him more than ever: he was listened to <i>cum fide</i> even when his advice was ruinous"],
+      ["Why it matters","This is the evidence for the 'hero' side of the question 'A Hero or a Villain?'; Tacitus frames it so that we read the courage as an investment"]
+    ],
+    rows:[
+      { ln:"12–14", lat:"[[t2a|ac forte illis diebus]] Caesari [[t2b|anceps periculum]] [[t2c|oblatum est / praebuitque]] ipsi [[t2d|materiem cur amicitiae constantiaeque Seiani / magis fideret]].",
+        en:"And by chance in those days a critical danger befell Caesar, and it gave him grounds for trusting more in the friendship and steadfastness of Sejanus." },
+      { ln:"14–15", lat:"[[t2e|vescebantur in villa, cui vocabulum Speluncae]], [[t2f|mare / Amunclanum inter et Fundanos montes]] nativo in specu.",
+        en:"They were dining in a villa whose name was Spelunca, between the sea of Amunclae and the hills of Fundi, in a natural cave." },
+      { ln:"15–17", lat:"[[t2g|eius os / lapsis repente saxis obruit quosdam ministros]]: [[t2h|hinc metus in omnes / et fuga eorum qui convivium celebrabant]].",
+        en:"Its mouth, the rocks having suddenly collapsed, crushed some of the servants: from this came fear among everyone and the flight of those who were attending the banquet." },
+      { ln:"17–19", lat:"[[t2i|Seianus genu utroque et / manibus super Caesarem suspensus]] [[t2j|opposuit sese incidentibus]] / atque [[t2k|habitu tali repertus est a militibus qui subsidio venerant]].",
+        en:"Sejanus, poised over Caesar on both knees and his hands, set himself in the way of the falling rocks, and was found in this posture by the soldiers who had come to help." },
+      { ln:"19–21", lat:"[[t2l|maior / ex eo]] et, [[t2m|quamquam exitiosa suaderet]], [[t2n|ut non sui anxius cum fide / audiebatur]].",
+        en:"From this he was greater, and although the advice he gave was ruinous, he was listened to with trust, as a man not anxious for himself." }
+    ],
+    notes:{
+      t2a:{ cat:"context", tag:"'By chance': when and where we are", tr:"And by chance in those days",
+        what:"<i>forte</i>, 'by chance', is the first thing Tacitus says about the episode. <i>illis diebus</i> places it in AD 26, just after Tiberius has left Rome for Campania. Tacitus has already told us (4.57) that Sejanus urged the emperor to leave, because an emperor away from Rome could be controlled through the letters and visitors Sejanus filtered.",
+        effect:"'Chance' quietly removes any credit from Sejanus for the opportunity, and the reader who remembers 4.1 (<i>deorum ira</i>) may suspect that what looks like chance is the gods' anger working against Rome. The timing also matters: the danger arrives at the very moment Sejanus most needs the emperor's trust.",
+        ex:{ style:"Tacitus opens the episode with <i>ac forte illis diebus</i>, 'and by chance in those days', so that the rock fall is presented as an accident of timing rather than anything Sejanus earned, and the reader who remembers the 'anger of the gods' in 4.1 is invited to see chance working, as usual in Tacitus, against Rome's interests.",
+             content:"The danger to Tiberius happened by chance during the days (of AD 26) when he had just left Rome and was travelling in Campania with Sejanus.",
+             essay:"Tacitus is careful to call the cave incident a matter of chance: Sejanus did not create the opportunity to be a hero, he only used it, which fits the calculating character drawn in 4.1." } },
+      t2b:{ cat:"word", tag:"A double-edged danger", tr:"a critical danger",
+        what:"<i>anceps</i> literally means 'two-headed' (<i>ambi</i> + <i>caput</i>), and so 'uncertain, critical, capable of going either way'. Applied to a danger it means life-or-death. But the word also carries its literal sense into a passage about a man with two faces.",
+        effect:"The reader feels the danger was real and the outcome uncertain, which makes Sejanus' act more impressive; and the pun on 'two-headed' lets Tacitus hint that the danger will cut both ways, saving Tiberius' life while handing his judgement to Sejanus.",
+        ex:{ style:"Tacitus calls the rock fall <i>anceps periculum</i>, 'a critical danger', and the adjective, which literally means 'two-headed', suits an episode that cuts two ways: it saves the emperor's life and at the same time delivers his trust to the man who will misuse it.",
+             content:"Tacitus says that Tiberius faced a critical (life-threatening) danger.",
+             essay:"The danger in the cave was genuine, a 'critical' one in Tacitus' word, which is why the episode is the strongest evidence anyone can bring for calling Sejanus a hero." } },
+      t2c:{ cat:"structure", tag:"Two verbs, one meaning", tr:"befell him and gave him",
+        what:"<i>oblatum est</i> (passive) and <i>praebuit</i> (active) mean almost the same thing, 'was presented' and 'offered'. Tacitus says the same idea twice with a change of voice and construction: this is <i>variatio</i>, his habit of avoiding repetition by varying the grammar.",
+        effect:"The doubling slows the sentence down and makes the reader dwell on what the danger 'offered': not a rescue but <i>materiem</i>, an opportunity. The sentence is about consequences before the event has even been described.",
+        ex:{ style:"Tacitus uses <i>variatio</i> in <i>oblatum est praebuitque</i>, 'befell him and gave him', two verbs of almost identical meaning but opposite voice, so that the sentence lingers on what the danger produced, the trust that Sejanus would exploit, before it tells us what the danger was.",
+             content:"The danger gave Tiberius a reason to trust Sejanus' friendship and loyalty more than before.",
+             essay:"Tacitus tells us the result of the cave episode, that it gave Tiberius grounds to trust Sejanus, before he tells the story itself, so that the reader knows from the start that the heroism is going to be turned to use." } },
+      t2d:{ cat:"word", tag:"'Material' for trust", tr:"grounds for trusting more in the friendship and steadfastness of Sejanus",
+        what:"<i>materies</i> is literally 'timber, raw material', and so 'occasion, grounds'. <i>fideret</i> is subjunctive in an indirect question after <i>cur</i>. <i>amicitiae constantiaeque</i> are the two qualities Tiberius believed in: friendship and steadfastness, the words a Roman used of a loyal ally.",
+        effect:"Calling the episode 'material' makes the danger sound like a resource that Sejanus worked up, and the word is Tacitus' rather than Tiberius'. The reader sees the emperor supplied with reasons to believe what the prefect wanted him to believe.",
+        ex:{ style:"The word <i>materiem</i>, literally 'raw material', in <i>praebuitque ipsi materiem cur ... magis fideret</i>, 'gave him grounds for trusting more', turns the rescue into a resource: the danger provided something that could be worked into the trust Sejanus needed, and the genitives <i>amicitiae constantiaeque</i> name the two virtues that Tiberius, and only Tiberius, believed he had.",
+             content:"The incident gave Tiberius reason to have more confidence in Sejanus' friendship and his loyalty (steadfastness).",
+             essay:"Tacitus describes the cave incident as 'material' for Tiberius' trust, a word that makes Sejanus' courage look like something manufactured for a purpose, which is the villain's version of a heroic deed." } },
+      t2e:{ cat:"context", tag:"Dinner in the Cave", tr:"They were dining in a villa whose name was Spelunca",
+        what:"<i>vescebantur</i> is a deponent imperfect: the meal is in progress when disaster strikes. <i>cui vocabulum Speluncae</i>: the villa's name was 'the Cave' (the modern Sperlonga), and <i>nativo in specu</i> tells us the dining room really was a natural grotto, an extravagant fashion in villa design. Archaeologists have excavated it, with its sculptures of Odysseus.",
+        effect:"The setting is luxury: an emperor dining inside a cave for the pleasure of it. That the roof of a pleasure-dome fell in gives the episode a faint moral edge, and the imperfect tense puts the reader at the table when the rocks fall.",
+        ex:{ style:"The imperfect deponent <i>vescebantur</i>, 'they were dining', places the reader in the middle of the meal, and the detail <i>cui vocabulum Speluncae ... nativo in specu</i>, 'whose name was the Cave ... in a natural grotto', makes clear that the setting was a luxurious dining room built into living rock, so that the collapse is both a natural accident and a comment on imperial extravagance.",
+             content:"They were dining in a villa called Spelunca ('the Cave'), which had its dining room inside a natural cave, on the coast between the bay of Amyclae and the hills of Fundi.",
+             essay:"The setting of the rescue, an emperor dining inside a natural cave at a luxury villa, is itself part of Tacitus' picture of a court in which the prefect had made himself indispensable." } },
+      t2f:{ cat:"order", tag:"The preposition sits between", tr:"between the sea of Amunclae and the hills of Fundi",
+        what:"<i>inter</i> normally comes first; here it is placed between its two objects (<i>mare Amunclanum inter et Fundanos montes</i>). This delayed preposition is called anastrophe. The bay of Amyclae is the sea; Fundi (modern Fondi) is a town inland with hills behind it.",
+        effect:"The word order enacts the geography: the word 'between' is itself between the sea and the hills. It is a small poetic flourish in a prose historian, and it shows Tacitus taking care over the scene before the violence.",
+        ex:{ style:"In <i>mare Amunclanum inter et Fundanos montes</i>, 'between the sea of Amunclae and the hills of Fundi', Tacitus delays the preposition <i>inter</i> so that it stands between its two nouns, and the word order mirrors the position of the villa, caught between sea and mountain.",
+             content:"The villa stood between the sea (the bay of Amunclae) and the hills of Fundi.",
+             essay:"" } },
+      t2g:{ cat:"order", tag:"The cave's mouth as the attacker", tr:"Its mouth, the rocks having suddenly collapsed, crushed some of the servants",
+        what:"We expect 'at the mouth of the cave rocks fell'; instead <i>os</i>, the mouth, is the subject and <i>obruit</i>, 'crushed, buried', is its verb. The rock fall is compressed into an ablative absolute, <i>lapsis repente saxis</i>, with <i>repente</i> ('suddenly') at its centre. <i>quosdam ministros</i>, 'some of the servants': the victims are unnamed and uncounted.",
+        effect:"The cave is made to act, its mouth crushing men as if it were swallowing them, which gives the accident the feel of an attack. The ablative absolute makes the collapse instantaneous: three words, and it has happened. The reader has no more warning than the diners.",
+        ex:{ style:"Tacitus makes the cave the attacker in <i>eius os lapsis repente saxis obruit quosdam ministros</i>, 'its mouth, the rocks having suddenly collapsed, crushed some of the servants': the mouth of the cave is the subject of the violent verb <i>obruit</i>, as if it were swallowing the diners, and the three-word ablative absolute with <i>repente</i> at its centre makes the collapse as sudden for the reader as it was for the guests.",
+             content:"Rocks suddenly fell from the mouth of the cave and crushed some of the servants.",
+             essay:"" } },
+      t2h:{ cat:"structure", tag:"Panic without verbs", tr:"from this came fear among everyone and the flight of those who were attending the banquet",
+        what:"After the colon there is no verb at all: <i>metus</i> and <i>fuga</i>, fear and flight, are simply set down as abstract nouns. Tacitus prefers this to the obvious <i>omnes metuerunt et fugerunt</i>. <i>in omnes</i> makes the fear universal; <i>eorum qui convivium celebrabant</i> is a slightly grand phrase for the party guests.",
+        effect:"With no verb there is no time: fear and flight are instantaneous, and the reader sees a room emptying in a single glance. The universal <i>in omnes</i> is the foil for the next sentence, where one man does not run.",
+        ex:{ style:"The verbless phrase <i>hinc metus in omnes et fuga</i>, 'from this, fear among everyone and flight', throws down the two abstract nouns without a verb, as if there were no time to complete a sentence, and the word <i>omnes</i> prepares the contrast with the single man, named first in the next sentence, who stays.",
+             content:"Everyone was afraid and the guests at the dinner fled.",
+             essay:"Tacitus makes everyone else flee the cave so that Sejanus' decision to stay stands out; even a hostile historian gives the villain his one unmistakably brave moment." } },
+      t2i:{ cat:"order", tag:"One man stays: the body as a roof", tr:"Sejanus, poised over Caesar on both knees and his hands",
+        what:"<i>Seianus</i> is the first word, set directly against the <i>fuga</i> of everyone else. Then Tacitus builds him physically: <i>genu utroque et manibus</i> (ablatives of instrument, each knee and both hands), <i>super Caesarem</i> (his body above the emperor's), <i>suspensus</i> (held up, arched). It is the posture of a man making himself a roof.",
+        effect:"The picture is exact and unheroic in its vocabulary, knees and hands rather than sword and shield, which makes it more convincing. The reader can see it; so, Tacitus will say, could the soldiers. And the toughness of <i>corpus laborum tolerans</i> from 4.1 is shown in action.",
+        ex:{ style:"Against the flight of everyone else Tacitus places the name <i>Seianus</i> first in its sentence and then builds a physical picture, <i>genu utroque et manibus super Caesarem suspensus</i>, 'poised over Caesar on both knees and his hands': the ablatives name each knee and both hands, and <i>super Caesarem</i> puts his body above the emperor's like a roof, so the reader sees exactly how the emperor was saved.",
+             content:"Sejanus crouched over Tiberius, supporting himself on both knees and his hands, and used his body to shield the emperor from the falling rocks.",
+             essay:"Sejanus shielding the emperor with his own body, on his knees and hands under falling rock, is a physically courageous act by any standard, and the essay has to admit it before explaining why Tacitus still does not call him a hero." } },
+      t2j:{ cat:"word", tag:"Against the rocks still falling", tr:"set himself in the way of the falling rocks",
+        what:"<i>opposuit sese</i>: he placed himself as a barrier (<i>ob</i> + <i>pono</i>), with the emphatic reflexive <i>sese</i> rather than plain <i>se</i>. <i>incidentibus</i> is a present participle with <i>saxis</i> understood: the rocks are still falling as he does it.",
+        effect:"The present participle keeps the danger live; this is not a man protecting the emperor after the collapse but during it. The doubled reflexive <i>sese</i> stresses that what he put in the way was himself.",
+        ex:{ style:"The phrase <i>opposuit sese incidentibus</i>, 'set himself in the way of the falling rocks', uses the present participle <i>incidentibus</i> to keep the rocks in motion, so that Sejanus is shielding the emperor while the danger continues, and the emphatic reflexive <i>sese</i> stresses that what he offered as a barrier was his own body.",
+             content:"He placed himself in the path of the rocks that were still falling.",
+             essay:"" } },
+      t2k:{ cat:"structure", tag:"Found like that: the tableau and its witnesses", tr:"and was found in this posture by the soldiers who had come to help",
+        what:"<i>habitu tali</i> is a local ablative, 'in such a posture'; <i>repertus est</i>, 'was found', is passive, with <i>a militibus</i> as the agent; <i>subsidio</i> is a predicative dative, 'for help'. The soldiers are Praetorians, his own men.",
+        effect:"Tacitus does not say 'he saved the emperor'; he says he was found in that position. The heroism is presented as a picture that had witnesses, and the witnesses are the soldiers who will carry the story. A suspicious reader notices that the act was not only brave but seen.",
+        ex:{ style:"Tacitus ends the rescue not with the emperor saved but with a tableau: <i>habitu tali repertus est a militibus</i>, 'he was found in this posture by the soldiers'. The passive verb makes Sejanus the object of other men's eyes, and by naming the witnesses Tacitus suggests that the courage mattered because it was seen and would be reported.",
+             content:"The soldiers who came to help found Sejanus still in that position, shielding the emperor.",
+             essay:"Tacitus chooses to describe the rescue as a scene the soldiers 'found', which lets the reader wonder whether Sejanus' courage was also a performance for an audience, as his modesty was in 4.1." } },
+      t2l:{ cat:"word", tag:"Greater from this", tr:"From this he was greater",
+        what:"Three words where a fuller writer would need a sentence (<i>Seianus ex eo discrimine maior factus est</i>). <i>maior</i> means 'more influential, more powerful', not morally greater. This brevity is Tacitus' trademark.",
+        effect:"The reward is stated as flatly as an entry in an account book: risk taken, profit made. The reader is being nudged from the deed to its use.",
+        ex:{ style:"Tacitus sums up the result in three words, <i>maior ex eo</i>, 'from this he was greater', with the verb left out: the brevity makes the gain in power sound like a transaction, the return on the risk just taken.",
+             content:"As a result of the incident Sejanus became more powerful and influential.",
+             essay:"The immediate consequence of the rescue, in Tacitus' three-word summary, is that Sejanus 'was greater': the heroic act is measured by what it bought him." } },
+      t2m:{ cat:"word", tag:"The sting in the tail", tr:"although the advice he gave was ruinous",
+        what:"<i>quamquam</i> with the subjunctive <i>suaderet</i> (earlier Latin used the indicative). <i>exitiosa</i>, 'deadly, ruinous', picks up <i>exitio</i> in 4.1 line 6: the same root, the same judgement. The clause is tucked into the middle of the sentence, between the reward and the trust.",
+        effect:"Tacitus cannot let the heroism stand for a clause without qualifying it. The reader is reminded, in the very sentence that records Tiberius' trust, that the advice this trust purchased was destroying Rome. This is how the portrait of 4.1 controls the reading of 4.59.",
+        ex:{ style:"Into the sentence that records Tiberius' new trust Tacitus inserts <i>quamquam exitiosa suaderet</i>, 'although the advice he gave was ruinous': the adjective <i>exitiosa</i> echoes the <i>exitio</i>, 'ruin', of the character sketch, so that the reader is reminded of the cost of the trust at the very moment it is won.",
+             content:"Tacitus says that even though the advice Sejanus gave was harmful (ruinous), Tiberius listened to him with trust.",
+             essay:"Tacitus allows the cave rescue to be brave but adds at once that the advice it bought a hearing for was 'ruinous', so the heroic act becomes the means by which the villain does his damage." } },
+      t2n:{ cat:"order", tag:"'As a man not anxious for himself'", tr:"he was listened to with trust, as a man not anxious for himself",
+        what:"<i>ut non sui anxius</i>: 'as (being) not anxious for himself', with <i>sui</i> an objective genitive, the same construction as <i>sui obtegens</i> in 4.1. <i>cum fide</i>, 'with trust', is Tiberius' state of mind; <i>audiebatur</i> is imperfect, 'used to be listened to', a habit from now on.",
+        effect:"The word <i>ut</i> ('as') is doing quiet work: Tiberius listened to him as if he were unselfish. The reader who remembers <i>sui obtegens</i>, 'secretive about himself', hears the echo: the man who hid himself now appears to have no self-interest at all, and the emperor believes it. The imperfect makes the misjudgement permanent.",
+        ex:{ style:"The closing words <i>ut non sui anxius cum fide audiebatur</i>, 'he was listened to with trust, as a man not anxious for himself', carry the irony of the whole episode: <i>ut</i> means 'as if', and <i>sui</i> echoes <i>sui obtegens</i> from the character sketch, so that the man who concealed himself is now believed to have no self-interest, and the imperfect <i>audiebatur</i> makes Tiberius' misplaced trust a habit rather than a moment.",
+             content:"Tiberius came to trust Sejanus and listen to his advice, believing that he had no concern for his own interests.",
+             essay:"Tiberius took the rescue as proof that Sejanus was 'not anxious for himself'; Tacitus' phrasing ('as if') tells the reader that this is exactly the misreading the villain was working for." } }
+    },
+    questions:[
+      { id:"q1", marks:3, type:"content", q:"Lines 14–15 (<i>vescebantur ... specu</i>): describe where Tiberius and Sejanus were when the danger struck. Give <b>three</b> details.",
+        model:"They were dining (at a banquet); in a villa called Spelunca ('the Cave'); which lay between the sea of Amunclae and the hills of Fundi; in a natural cave (the dining room was inside a grotto).",
+        scheme:["One mark for each of any three details from within lines 14–15.","'Between the sea and the mountains' is enough for that detail; the proper names are not required.","'In a cave' and 'the villa was called the Cave' count as two separate details."] },
+      { id:"q2", marks:2, type:"latin", q:"Lines 15–17 (<i>eius os ... celebrabant</i>): pick out and translate the Latin word which shows that the collapse was unexpected.",
+        model:"<i>repente</i> — 'suddenly'.",
+        scheme:["One mark for the Latin word copied exactly.","One mark for the translation ('suddenly', 'all of a sudden')."] },
+      { id:"q3", marks:2, type:"content", q:"Lines 15–17: what happened to (i) some of the servants and (ii) the other guests?",
+        model:"(i) They were crushed / buried by the falling rocks. (ii) They were terrified and fled (ran away from the dinner).",
+        scheme:["1 mark for the servants being crushed or killed by the rocks.","1 mark for the guests panicking and fleeing; 'they were afraid' alone is not quite enough, the flight is the point."] },
+      { id:"q4", marks:8, type:"style", q:"Lines 15–19 (<i>eius os ... venerant</i>): how does Tacitus make this a dramatic and vivid account of the rock fall and Sejanus' action? Make <b>four</b> points and refer closely to the Latin.",
+        model:"<b>1. Suddenness compressed.</b> The ablative absolute <i>lapsis repente saxis</i>, 'the rocks having suddenly collapsed', packs the whole disaster into three words with <i>repente</i> at its centre, and the violent verb <i>obruit</i>, 'crushed', follows at once, so the reader has no more warning than the diners. <b>2. The cave attacks.</b> Tacitus makes <i>eius os</i>, 'its mouth', the subject of the sentence rather than saying that rocks fell at the cave's mouth: the cave seems to swallow the servants, which turns an accident into something like an assault. <b>3. Panic without verbs.</b> After the colon, <i>hinc metus in omnes et fuga</i>, 'from this, fear among everyone and flight', has no verb at all; fear and flight are thrown down as bare nouns, as if there were no time to finish a sentence, and <i>in omnes</i> makes the panic universal. <b>4. The one man who stays.</b> Against the flight of everyone else Tacitus places <i>Seianus</i> first in its sentence, then builds him physically, <i>genu utroque et manibus super Caesarem suspensus</i>, 'poised over Caesar on both knees and his hands', so the reader can see the emperor beneath a human roof; <i>opposuit sese incidentibus</i>, 'set himself in the way of the falling rocks', uses a present participle to keep the rocks in motion while he does it. (Also creditable: the tableau <i>habitu tali repertus est a militibus</i>, the hero frozen in position for witnesses to find; the emphatic reflexive <i>sese</i>.)",
+        scheme:["Two marks per point: Latin quoted + explanation of what the writer does + effect, linked to 'dramatic' or 'vivid'.","Four distinct points are needed for full marks; a fifth point cannot compensate for a weak one.","Latin from outside lines 15–19 (e.g. <i>maior ex eo</i>) earns nothing here."] },
+      { id:"q5", marks:2, type:"interp", q:"Lines 19–21 (<i>maior ... audiebatur</i>): do you think Tacitus wants the reader to admire Sejanus for what he did in the cave? Give <b>one</b> reason for your answer, based on these lines.",
+        model:"No: even as he records that Sejanus became more powerful and was trusted, Tacitus adds that the advice Sejanus gave was ruinous (<i>quamquam exitiosa suaderet</i>), and he says Tiberius listened to him 'as if' he were not concerned for himself, which implies that he was. (A 'yes' answer is creditable if it is properly reasoned: e.g. yes, because Tacitus records that he was trusted as a man not anxious for himself, which suggests genuine courage.)",
+        scheme:["1 mark for a clear yes/no.","1 mark for a reason drawn from lines 19–21. A reason from the cave scene itself (lines 15–19) does not answer this question."] }
+    ]
+  },
+
+  /* =================================================================
+     PASSAGE 3 · Virgil, Aeneid 8.478–495
+     ================================================================= */
+  { id:"virg", short:"3 · Mezentius", author:"Virgil", work:"<i>Aeneid</i> 8.478–495", lines:"lines 1–18 (= 478–495)",
+    heading:"Mezentius: a king's gruesome behaviour",
+    intro:"Aeneas has sailed up the Tiber to Pallanteum, the little town on the future site of Rome, to ask its king Evander for help against the Latins and Turnus. Evander is speaking. He is about to explain why a whole Etruscan army is waiting on the coast for a foreign leader, and why that leader could be Aeneas. To do it he must make Aeneas, and Virgil's reader, hate Mezentius. Line numbers below are the exam booklet's: line 1 is <i>Aeneid</i> 8.478.",
+    facts:[
+      ["Who is speaking","King Evander of Pallanteum, to Aeneas, at the end of a tour of the site of Rome; the whole passage is persuasion"],
+      ["Agylla","The Etruscan city more usually called Caere, about thirty miles north-west of Rome; the Etruscans were believed to have come from Lydia in Asia Minor"],
+      ["Mezentius","King of Caere, driven out by his own people for his cruelty; he fled to Turnus, king of the Rutuli, Aeneas' enemy. In Book 10 he fights the Trojans and is killed by Aeneas after the death of his son Lausus, who dies defending him"],
+      ["Why it matters to Evander","The Etruscans want Mezentius back for punishment; Turnus shelters him; so the Etruscans are natural allies of Aeneas, and a prophecy says they must be led by a foreigner"],
+      ["The label","In Book 7 Virgil calls Mezentius <i>contemptor divum</i>, 'despiser of the gods'; here Evander calls him a <i>tyrannus</i>"],
+      ["A complication","In Book 10 Mezentius fights bravely and dies asking to be buried with his son; the villain of Book 8 becomes something more complicated"]
+    ],
+    rows:[
+      { ln:"1–3", lat:"[[va|haud procul hinc]] saxo incolitur fundata vetusto / urbis Agyllinae sedes, ubi [[vb|Lydia quondam / gens, bello praeclara]], iugis insedit Etruscis.",
+        en:"Not far from here, founded on ancient rock, stands the inhabited site of the city of Agylla, where once the Lydian race, famous in war, settled on the Etruscan ridges." },
+      { ln:"4–5", lat:"hanc [[vc|multos florentem annos]] rex deinde [[vd|superbo / imperio et saevis tenuit Mezentius armis]].",
+        en:"This city, flourishing for many years, king Mezentius then held with arrogant rule and cruel arms." },
+      { ln:"6–7", lat:"[[ve|quid memorem infandas caedes, quid facta tyranni / effera?]] [[vf|di capiti ipsius generique reservent!]]",
+        en:"Why should I recount the unspeakable slaughters, why the savage deeds of the tyrant? May the gods keep them in store for his own head and for his son-in-law!" },
+      { ln:"8–9", lat:"[[vg|mortua quin etiam iungebat corpora vivis]] / [[vh|componens manibusque manus atque oribus ora]],",
+        en:"What is more, he even used to join dead bodies to living ones, fitting hands to hands and faces to faces," },
+      { ln:"10–11", lat:"[[vi|tormenti genus]], et [[vj|sanie taboque fluentes]] / [[vk|complexu in misero longa sic morte necabat]].",
+        en:"a kind of torture, and, streaming with gore and putrefaction, in that wretched embrace he killed them like this by a lingering death." },
+      { ln:"12–14", lat:"[[vl|at fessi tandem cives]] [[vm|infanda furentem]] / armati [[vn|circumsistunt ipsumque domumque, / obtruncant socios, ignem ad fastigia iactant]].",
+        en:"But at last the citizens, worn out, armed themselves and surrounded him, raging in his unspeakable crimes, both the man and his house; they cut down his companions, they hurl fire onto the roof-tops." },
+      { ln:"15–16", lat:"ille inter caedem Rutulorum elapsus in agros / [[vo|confugere et Turni defendier hospitis armis]].",
+        en:"He, slipping away amid the slaughter, fled for refuge into the territory of the Rutulians and was defended by the arms of Turnus, his host." },
+      { ln:"17–18", lat:"ergo omnis [[vp|furiis surrexit Etruria iustis]]: / [[vq|regem ad supplicium praesenti Marte reposcunt]].",
+        en:"Therefore all Etruria has risen up in justified fury: they demand the king for punishment with war on the spot." }
+    ],
+    notes:{
+      va:{ cat:"context", tag:"Evander points", tr:"Not far from here",
+        what:"<i>hinc</i>, 'from here', is Pallanteum, the future Rome. Evander is speaking to Aeneas, and the whole passage is a speech with a purpose: to persuade Aeneas to accept the leadership of the Etruscan army. <i>saxo ... vetusto</i>, 'on ancient rock', and <i>fundata</i> give the city age and solidity; Agylla is Caere, about thirty miles from Rome.",
+        effect:"The reader is placed on the ground with Aeneas, looking north. The old, well-founded city makes the tyranny that follows an outrage against something venerable. It also matters for the examiner's question about who is speaking and why: Evander needs Aeneas to hate Mezentius.",
+        ex:{ style:"Evander begins with a gesture, <i>haud procul hinc</i>, 'not far from here', placing Aeneas and the reader on the site of Rome and looking towards Agylla, and the phrase <i>saxo ... fundata vetusto</i>, 'founded on ancient rock', gives the city an age and solidity that make the tyrant's abuse of it seem an outrage.",
+             content:"The city of Agylla lay not far from Pallanteum, built on ancient rock, and had been settled long ago by the Lydian (Etruscan) people, who were famous in war.",
+             essay:"The portrait of Mezentius is delivered by Evander, who is trying to persuade Aeneas to lead the Etruscans against him, so the essay should note that Virgil gives the villain's character through a speaker with every reason to blacken it." } },
+      vb:{ cat:"context", tag:"A proud people", tr:"the Lydian race, famous in war",
+        what:"The Etruscans were believed (by Herodotus and most ancient writers) to have migrated from Lydia in Asia Minor, and Virgil follows the tradition. <i>bello praeclara</i> is an ablative of respect: famous 'in war'. <i>quondam</i>, 'once', looks back to a golden past.",
+        effect:"A warlike and distinguished people were reduced to enduring Mezentius. The praise of the Etruscans makes their suffering more shocking and their eventual revolt more admirable, and it flatters the army Aeneas is being asked to lead.",
+        ex:{ style:"By calling the Etruscans <i>Lydia ... gens, bello praeclara</i>, 'the Lydian race, famous in war', Evander gives Mezentius' victims a proud history, so that the tyranny described next is an insult to a warlike people and their later uprising is the recovery of what they once were.",
+             content:"The people of Agylla were Lydians (Etruscans, believed to have come from Lydia) and they were famous for war.",
+             essay:"" } },
+      vc:{ cat:"sound", tag:"Long years in a slow line", tr:"flourishing for many years",
+        what:"<i>florentem</i> agrees with <i>hanc</i> (the city): it was blooming. <i>multos ... annos</i> is an accusative of duration. Line 4 is heavily spondaic (long syllables dominate: <i>hanc multos florentem annos rex deinde superbo</i>), so the metre slows down.",
+        effect:"The slow rhythm stretches out the years of prosperity, so that <i>deinde</i>, 'then', and the tyrant's name at the end of the next line fall like a blow. The city's happiness is given time in the verse before it is taken away.",
+        ex:{ style:"Line 4, <i>hanc multos florentem annos rex deinde superbo</i>, is heavily spondaic, and the slow rhythm draws out the many years in which the city was <i>florentem</i>, 'flourishing', so that the arrival of the tyrant, delayed to the next line, feels like the end of a long peace.",
+             content:"The city had flourished (prospered) for many years before Mezentius ruled it.",
+             essay:"" } },
+      vd:{ cat:"order", tag:"The two words for a tyrant", tr:"with arrogant rule and cruel arms",
+        what:"<i>superbo imperio</i> and <i>saevis armis</i> are ablatives of instrument: how he held the city. <i>superbus</i> is the name Romans gave their last king, Tarquinius Superbus, expelled for exactly this; <i>saevus</i> is the cruelty of a beast. The word order encloses: <i>rex ... Mezentius</i> frame the line, and the adjectives are separated from their nouns so that <i>superbo / imperio</i> runs over the line-end (enjambment).",
+        effect:"A Roman reader hears the Tarquins in <i>superbo</i>: this is the kind of king Rome drove out. The enclosing order, with the king's name held back to the end of line 5, makes Mezentius arrive as the climax of his own crimes. The reader is given the verdict before the evidence.",
+        ex:{ style:"Virgil gives Mezentius the two adjectives a Roman most feared in a ruler, <i>superbo imperio et saevis ... armis</i>, 'with arrogant rule and cruel arms': <i>superbus</i> was the title of Rome's last king, Tarquinius Superbus, so the tyrant is condemned by association, and the name <i>Mezentius</i> is held back to the very end of the sentence, arriving as the climax of the description of his rule.",
+             content:"Mezentius ruled Agylla by arrogant (proud) power and by cruel force of arms.",
+             essay:"Virgil's Mezentius is the Roman idea of a tyrant in miniature: 'arrogant rule and cruel arms', the same charge Romans brought against Tarquinius Superbus, and so the exact opposite of a hero like Horatius who fought to keep such a king out." } },
+      ve:{ cat:"structure", tag:"'Why should I tell?' and then he tells", tr:"Why should I recount the unspeakable slaughters, why the savage deeds of the tyrant?",
+        what:"<i>quid memorem</i> is a deliberative subjunctive, 'why should I relate?', and <i>quid</i> is repeated (anaphora) with a second object. The figure is <i>praeteritio</i>: claiming to pass over something while mentioning it. <i>infandas</i>, 'unspeakable', literally means 'not to be spoken'; <i>effera</i>, 'savage, bestial', is thrown to the start of the next line (enjambment) and followed by a full stop.",
+        effect:"Evander pretends the crimes are too well known and too terrible to describe, which makes them sound worse, and then describes the worst in detail. The enjambed <i>effera</i>, isolated at the line's start, lands like a verdict: the tyrant is an animal.",
+        ex:{ style:"Evander uses a rhetorical question with anaphora, <i>quid memorem infandas caedes, quid facta tyranni / effera?</i>, 'why should I recount the unspeakable slaughters, why the savage deeds of the tyrant?', pretending that the crimes need no telling before telling the worst of them, and the enjambment that isolates <i>effera</i>, 'bestial', at the start of line 7 leaves the reader with a single word of judgement.",
+             content:"Evander says Mezentius committed unspeakable massacres and savage (bestial) deeds, so many that he need not list them.",
+             essay:"Even before the torture is described, Virgil has Evander call Mezentius' deeds 'unspeakable' and 'bestial', words that place him outside human behaviour altogether." } },
+      vf:{ cat:"word", tag:"A curse on his head", tr:"May the gods keep them in store for his own head and for his son-in-law!",
+        what:"<i>reservent</i> is a jussive subjunctive: a prayer, or a curse. <i>capiti ipsius</i>, 'for his own head', is the language of Roman cursing; <i>generique</i> is literally 'and for his son-in-law', but Virgil seems to mean his family generally (Mezentius' son Lausus dies in Book 10). The formula asks the gods to give the tyrant what he gave others.",
+        effect:"Evander's calm narration breaks into a prayer for vengeance, which shows his own feeling and invites Aeneas to share it. The reader is reminded that the gods are the tyrant's enemies; Virgil elsewhere calls him <i>contemptor divum</i>, 'despiser of the gods'.",
+        ex:{ style:"The narrative breaks into a curse, <i>di capiti ipsius generique reservent!</i>, 'may the gods keep such things in store for his own head and for his son-in-law!': the jussive subjunctive turns Evander from narrator into prosecutor, and the formula of the curse, with its exclamation, makes the reader share his wish to see the tyrant punished.",
+             content:"Evander prays that the gods will punish Mezentius and his family (literally his son-in-law) in the same way as he punished others.",
+             essay:"Evander calls down the gods on Mezentius' head, and Virgil elsewhere names him 'despiser of the gods', so the villain is defined partly by his relationship to heaven, the reverse of Aeneas' <i>pietas</i>." } },
+      vg:{ cat:"order", tag:"Dead against living across the line", tr:"What is more, he even used to join dead bodies to living ones",
+        what:"<i>mortua</i> is the first word of line 8 and <i>vivis</i> the last, so the line is framed by the two opposites; <i>corpora</i> and <i>iungebat</i> sit between them. <i>quin etiam</i>, 'what is more, indeed he even', marks a climax after the general charges. <i>iungebat</i> is imperfect: a repeated practice, not one atrocity.",
+        effect:"The line itself binds the dead to the living as Mezentius did. The reader is made to feel the joining physically through the word order, and the imperfect tense means it happened again and again.",
+        ex:{ style:"Virgil places <i>mortua</i> at the start of line 8 and <i>vivis</i> at its end, 'dead ... living', so that the line itself binds the dead to the living as Mezentius did, and the imperfect <i>iungebat</i>, 'used to join', tells the reader this was a repeated practice rather than a single atrocity.",
+             content:"Mezentius used to tie dead bodies to living people.",
+             essay:"Mezentius' signature crime, binding the living to corpses, is a torture with no military purpose, and it is what separates a villain from a merely harsh king: cruelty for its own sake." } },
+      vh:{ cat:"sound", tag:"Hand to hand, face to face", tr:"fitting hands to hands and faces to faces",
+        what:"<i>manibusque manus atque oribus ora</i>: each noun appears twice in different cases (polyptoton), dative then accusative, and the pairs are linked by <i>-que ... atque</i> (polysyndeton). <i>componens</i>, 'arranging, fitting together', is the careful verb of a craftsman or an undertaker laying out a body.",
+        effect:"The reader hears the corpse and the victim being matched part by part; the repetition enacts the pairing. The calm, technical <i>componens</i> is worse than any shriek: the tyrant is precise about his cruelty.",
+        ex:{ style:"The polyptoton of <i>manibusque manus atque oribus ora</i>, 'hands to hands and faces to faces', repeats each noun in two cases so that the reader hears the corpse and the living victim being matched limb by limb, and the participle <i>componens</i>, 'fitting together', a craftsman's word, makes the cruelty deliberate and careful.",
+             content:"He fitted the corpses to the living victims hand against hand and face against face.",
+             essay:"" } },
+      vi:{ cat:"word", tag:"A flat aside", tr:"a kind of torture",
+        what:"<i>tormenti genus</i> is an accusative in loose apposition to the whole action, two words dropped in as if classifying it. <i>tormentum</i> is the technical word for torture, especially of slaves.",
+        effect:"The understatement is chilling. Evander sounds as if he is filing the practice under a heading, and the calm makes the reader supply the horror. It also implies that this was a system, one 'kind' among others.",
+        ex:{ style:"Virgil drops in the two-word phrase <i>tormenti genus</i>, 'a kind of torture', as a flat aside, and the understatement, which sounds like a category rather than a cry of horror, leaves the reader to supply the disgust that Evander withholds.",
+             content:"Evander describes what Mezentius did as a form of torture.",
+             essay:"" } },
+      vj:{ cat:"word", tag:"Gore and rot", tr:"streaming with gore and putrefaction",
+        what:"Two nouns for decay, <i>sanies</i> (the discharge from a wound or corpse) and <i>tabum</i> (putrid matter), joined by <i>-que</i>, and the present participle <i>fluentes</i>, 'streaming', which agrees with the victims (<i>eos</i> understood). The living are already leaking the matter of the dead.",
+        effect:"The vocabulary is physical and revolting, chosen to make the reader smell the scene. <i>fluentes</i> makes the corruption an ongoing process: the victim is being turned into a corpse while still alive.",
+        ex:{ style:"The words <i>sanie taboque fluentes</i>, 'streaming with gore and putrefaction', pile up two nouns for decaying matter and a present participle of flowing, so that the living victims are described as already leaking the substance of the corpses they are tied to, and the reader is made to feel the physical horror rather than merely hear of it.",
+             content:"The victims were covered with, and dripping, the gore and rotting matter from the corpses.",
+             essay:"" } },
+      vk:{ cat:"order", tag:"A wretched embrace, a long death", tr:"in that wretched embrace he killed them like this by a lingering death",
+        what:"<i>complexu in misero</i> and <i>longa ... morte</i> make a chiasmus (noun-adjective, adjective-noun) with <i>sic</i> at the centre. <i>complexus</i>, 'embrace', is a word of love and greeting, here used of a corpse's grip. <i>longa morte</i> is an ablative of manner; <i>necabat</i>, imperfect, again marks repeated killing.",
+        effect:"Using the vocabulary of love for the torture is the cruellest touch: the victim dies in an embrace. The chiasmus wraps the death around the embrace as the corpse wraps the living man, and <i>longa</i> stresses that the point was slowness. The main verb <i>necabat</i> is held back to the very end of the sentence.",
+        ex:{ style:"In <i>complexu in misero longa sic morte necabat</i>, 'in that wretched embrace he killed them by a lingering death', Virgil uses <i>complexus</i>, a word for a lover's or a friend's embrace, of the corpse's grip on the living, and the chiasmus of <i>complexu ... misero longa ... morte</i> folds the death around the embrace as the corpse enfolds the victim, with the main verb <i>necabat</i> withheld to the end.",
+             content:"The victims died a slow (lingering) death in the horrible embrace of the corpse.",
+             essay:"Virgil borrows the word for a loving embrace to describe Mezentius' torture, and that inversion of something human into something monstrous is how the poem makes us judge him a villain rather than simply a hard ruler." } },
+      vl:{ cat:"structure", tag:"The turn: worn out, at last", tr:"But at last the citizens, worn out",
+        what:"<i>at</i> is Virgil's word for a change of direction. <i>fessi tandem</i>, 'worn out, at last', tells us the citizens had endured for a long time before acting. Line 12 is spondaic, matching their long suffering, and from here the verbs are historic presents (<i>circumsistunt, obtruncant, iactant</i>) after the imperfects of the torture.",
+        effect:"The revolt feels earned: they did not rebel lightly. The shift from imperfect to present tense makes the uprising happen now, in front of the reader, after the long slow horror of the previous lines.",
+        ex:{ style:"The narrative turns on <i>at fessi tandem cives</i>, 'but at last the citizens, worn out': <i>tandem</i> and <i>fessi</i> show how long the people endured before acting, so that their violence feels justified, and Virgil switches from the imperfect tense of the tortures to historic presents, <i>circumsistunt ... obtruncant ... iactant</i>, so that the uprising happens before the reader's eyes.",
+             content:"The citizens, exhausted by his cruelty, finally took up arms against Mezentius.",
+             essay:"Virgil is careful to say the citizens rose 'at last, worn out', so that the revolt against the villain is presented as long-suffering justice rather than rebellion, and their fury in line 17 is called 'justified'." } },
+      vm:{ cat:"sound", tag:"f- alliteration and the second 'unspeakable'", tr:"raging in his unspeakable crimes",
+        what:"<i>infanda furentem</i>: <i>infanda</i> is a neuter plural accusative used adverbially, 'unspeakably' or 'in unspeakable deeds'; <i>furentem</i>, 'raging', is the word for madness. The repeated <i>f</i> (<i>fessi ... infanda furentem ... fastigia</i>) runs across the sentence, and <i>infanda</i> repeats <i>infandas</i> from line 6.",
+        effect:"The alliteration gives the lines a harsh, spitting sound as the violence starts. Calling him <i>furentem</i>, mad, makes the citizens' action a cure rather than a crime, and the echo of <i>infandas</i> reminds the reader of what they are avenging.",
+        ex:{ style:"Virgil describes Mezentius as <i>infanda furentem</i>, 'raging in his unspeakable crimes', and the <i>f</i>-alliteration that runs through <i>fessi ... infanda furentem ... fastigia</i> gives the uprising a harsh sound, while the repetition of <i>infanda</i> from line 6 reminds the reader exactly what the citizens are avenging.",
+             content:"Mezentius was raging (behaving like a madman) in his unspeakable crimes.",
+             essay:"" } },
+      vn:{ cat:"structure", tag:"Surround, cut down, hurl fire", tr:"they surround both the man himself and his house, they cut down his companions, they hurl fire onto the roof-tops",
+        what:"Three historic-present verbs, each shorter and harder than the last, with no connecting word between the clauses (asyndeton): <i>circumsistunt ... obtruncant ... iactant</i>. Inside the first, <i>ipsumque domumque</i> uses double <i>-que</i> (polysyndeton) to wrap the man and his house together. The last clause is a chiasmus, verb-object-object-verb across <i>obtruncant socios, ignem ... iactant</i>. <i>fastigia</i> are the gables of the palace roof.",
+        effect:"The asyndeton drives the rhythm faster and faster; the reader feels the mob's momentum. The double <i>-que</i> shows the whole household engulfed, and the fire on the roof is the classic image of a tyrant's fall.",
+        ex:{ style:"The uprising comes in a tricolon of historic presents without connectives, <i>circumsistunt ... obtruncant ... iactant</i>, 'they surround, they cut down, they hurl', so that the asyndeton drives the violence faster with each verb, and the double <i>-que</i> of <i>ipsumque domumque</i>, 'both the man himself and his house', wraps the tyrant and his palace together in the people's revenge.",
+             content:"The citizens surrounded Mezentius and his palace, killed his companions and threw fire onto the roofs.",
+             essay:"" } },
+      vo:{ cat:"order", tag:"Escape into the enemy's arms", tr:"fled for refuge and was defended by the arms of Turnus, his host",
+        what:"<i>confugere</i> and <i>defendier</i> are historic infinitives (used for a main verb), and <i>defendier</i> is an archaic form of the passive infinitive, giving the line an old, epic ring. The word order encloses: <i>Turni ... hospitis</i> surrounds <i>defendier</i>, so the verb of protecting is itself protected by Turnus. <i>hospitis</i>, 'host', names the sacred bond of hospitality.",
+        effect:"Mezentius survives, which is the point of the whole speech: the Etruscans still want him. The enclosing order shows the protection physically. And the reader is told who protects tyrants: Turnus, Aeneas' enemy, so the villain of Etruria joins the case against the villain of the war.",
+        ex:{ style:"Virgil uses historic infinitives, <i>confugere et Turni defendier hospitis armis</i>, 'fled for refuge and was defended by the arms of Turnus his host', with the archaic form <i>defendier</i> lending an epic gravity, and the enclosing word order, <i>Turni ... hospitis</i> wrapped around <i>defendier</i>, makes the verb of protection itself protected, as Mezentius is by Turnus.",
+             content:"Mezentius escaped during the slaughter into the land of the Rutulians, where Turnus received him as a guest and protected him with his army.",
+             essay:"The villain is sheltered by Turnus, Aeneas' opponent, so that Virgil ties the tyrant of Caere to the enemy of Rome's destiny, and the hero's war against Turnus becomes also a war against Mezentius' kind of kingship." } },
+      vp:{ cat:"word", tag:"Justified fury", tr:"all Etruria has risen up in justified fury",
+        what:"<i>furiis ... iustis</i> is an ablative of manner, and the adjective <i>iustis</i> is held to the end of the line, separated from its noun (enclosing <i>surrexit Etruria</i>). <i>furiae</i> are usually the madness of the avenging spirits; here Virgil calls the fury 'just'. <i>omnis ... Etruria</i>: the whole country, personified, rises.",
+        effect:"Virgil puts the word of justice on the rebels' side, which settles the reader's judgement: rage against Mezentius is righteous. Delaying <i>iustis</i> to the line's end makes it the verdict on the whole passage.",
+        ex:{ style:"Virgil describes Etruria as rising <i>furiis ... iustis</i>, 'in justified fury', and by holding the adjective <i>iustis</i> to the end of the line, separated from its noun, he makes 'just' the final word on the people's rage, so that the reader is told that anger against Mezentius is righteous.",
+             content:"The whole of Etruria rose up against Mezentius in justified anger.",
+             essay:"Virgil calls the Etruscans' fury against Mezentius 'just', a rare thing for a poet to say of a mob, and it shows how completely the passage is designed to make the reader take sides against him." } },
+      vq:{ cat:"word", tag:"'They demand the king for punishment'", tr:"they demand the king for punishment with war on the spot",
+        what:"<i>regem</i>, 'the king', is placed first: the Etruscans want him back, and the word they use for him is the title he abused. <i>ad supplicium</i>, 'for punishment' (the word for execution); <i>praesenti Marte</i> is an ablative absolute with Mars standing for war (metonymy), 'with war at hand', i.e. they will fight for him now. <i>reposcunt</i>, 'demand back', is a historic present.",
+        effect:"The passage ends on the threat of immediate war, which is exactly Evander's point: here is an army ready to march, and it needs a leader. The tone shifts from horror to action, and Aeneas, and the reader, are meant to feel the pull.",
+        ex:{ style:"The passage ends on action: <i>regem ad supplicium praesenti Marte reposcunt</i>, 'they demand the king for punishment with war on the spot'. Placing <i>regem</i> first makes the tyrant's title the object of the people's demand, the personification <i>praesenti Marte</i> makes war itself present, and the historic present <i>reposcunt</i> leaves the reader with an army poised to move, which is precisely what Evander wants Aeneas to see.",
+             content:"The Etruscans are demanding that Mezentius be handed over to them for execution, and are ready to go to war immediately to get him.",
+             essay:"The Etruscans' demand that their former king be handed over 'for punishment' is where the villain's story meets the hero's: Aeneas will be the foreign leader the prophecy requires, and killing Mezentius in Book 10 becomes part of his mission." } }
+    },
+    questions:[
+      { id:"q1", marks:2, type:"content", q:"Lines 1–3 (<i>haud ... Etruscis</i>): what are we told about the people who founded the city of Agylla? Give <b>two</b> details.",
+        model:"They were Lydians (had come from Lydia); they were famous in war; they settled on the Etruscan ridges (hills); they did so long ago (<i>quondam</i>).",
+        scheme:["One mark for each of any two details from lines 1–3.","'Etruscans' alone does not earn the 'Lydian' mark, but 'came from Lydia' does."] },
+      { id:"q2", marks:2, type:"latin", q:"Lines 4–5 (<i>hanc ... armis</i>): pick out and translate the Latin adjective which describes the kind of power Mezentius exercised.",
+        model:"<i>superbo</i> — 'arrogant' / 'proud' / 'tyrannical' (rule). (<i>saevis</i>, 'cruel', describes his arms rather than his power, but is acceptable if translated correctly.)",
+        scheme:["One mark for the Latin word.","One mark for its translation."] },
+      { id:"q3", marks:3, type:"content", q:"Lines 8–11 (<i>mortua ... necabat</i>): describe the torture that Mezentius used. Give <b>three</b> details.",
+        model:"He tied dead bodies to living people; fitting hand to hand and face to face; the victims were covered in gore and putrefaction from the corpses; they died a slow, lingering death in this embrace.",
+        scheme:["One mark for each of any three details taken from lines 8–11.","'He tortured people' is the question restated and earns nothing on its own."] },
+      { id:"q4", marks:8, type:"style", q:"Lines 6–11 (<i>quid memorem ... necabat</i>): how does Virgil's language make Mezentius' cruelty horrifying? Make <b>four</b> points and refer closely to the Latin.",
+        model:"<b>1.</b> The rhetorical question with anaphora, <i>quid memorem infandas caedes, quid facta tyranni / effera?</i>, 'why should I recount the unspeakable slaughters, why the savage deeds of the tyrant?', pretends the crimes are too terrible to tell before telling them, and the enjambment that isolates <i>effera</i>, 'bestial', at the start of line 7 leaves a single word of judgement hanging: the man is an animal. <b>2.</b> <i>mortua</i> opens line 8 and <i>vivis</i> closes it, 'dead ... living', so the line itself binds the dead to the living as Mezentius does, and <i>quin etiam</i> marks this as the climax of a list of horrors. <b>3.</b> The polyptoton <i>manibusque manus atque oribus ora</i>, 'hands to hands and faces to faces', repeats each noun in two cases so the reader hears the corpse and the victim fitted together limb by limb, and the participle <i>componens</i>, 'arranging', is a craftsman's word that makes the cruelty deliberate and careful. <b>4.</b> The vocabulary of decay, <i>sanie taboque fluentes</i>, 'streaming with gore and putrefaction', gives two words for rotting matter and a participle of flowing, so the living victims are already leaking the substance of the dead; and <i>complexu in misero</i>, 'in that wretched embrace', takes a word for a loving embrace and uses it of a corpse's grip, while <i>longa ... morte</i> stresses that the point of the torture was its slowness. (Also creditable: the flat aside <i>tormenti genus</i>; the imperfects <i>iungebat</i> and <i>necabat</i> showing repeated practice; the chiasmus of line 11; <i>necabat</i> withheld to the end.)",
+        scheme:["Two marks per point: Latin quoted + what Virgil does + effect on the reader, linked to 'horrifying'.","Four separate points; naming a device without its effect scores one at most.","Stay inside lines 6–11: the uprising in lines 12–14 is not part of this question."] },
+      { id:"q5", marks:2, type:"interp", q:"Lines 12–18 (<i>at fessi ... reposcunt</i>): explain <b>one</b> way in which Virgil makes the reader feel that the Etruscans were right to rise against Mezentius.",
+        model:"Any one of, with explanation: he says the citizens were <i>fessi tandem</i>, worn out and acting only at last, so they had endured for a long time; he calls their fury <i>iustis</i>, justified; he calls Mezentius <i>furentem</i>, raging like a madman, so stopping him was a necessity; he shows the tyrant sheltered by Turnus, the enemy, so the Etruscans' demand for punishment is aligned with Aeneas' cause.",
+        scheme:["1 mark for identifying a relevant detail from lines 12–18.","1 mark for explaining how it makes the reader take the Etruscans' side. Latin is not required but a detail must be given."] }
+    ]
+  }
+  ],
+
+  /* ---------- Bringing it together: one paragraph across the booklet ---------- */
+  synthesis:{
+    title:"Bringing the three passages together",
+    intro:"The 16-mark essay will ask something like <i>'A villain is simply a hero seen from the wrong side.' How far do the texts you have studied support this view?</i> or <i>'Roman writers are more interested in villains than in heroes.' Do you agree?</i> You will need at least four texts or pictures in the exam. For now, practise one paragraph that uses Sejanus and Mezentius together. No Latin is needed; in the essay it earns nothing.",
+    q:"Write <b>one paragraph</b> (about 120–150 words) answering: <i>Do Tacitus and Virgil make their villains villainous in the same way?</i> Use both Sejanus and Mezentius, refer to specific details in English, and end with a sentence that answers the question.",
+    marks:6,
+    model:"Tacitus and Virgil make their villains villainous by opposite methods. Virgil's Mezentius is condemned by his deeds: Evander describes him tying living men to corpses, face to face, until they died a slow death in the corpse's embrace, and the poem calls the people's fury against him 'just'. There is no need to interpret; the horror does the work. Tacitus' Sejanus is condemned by interpretation. His only deed in the prescribed text is heroic, shielding the emperor with his own body when the cave roof fell, but Tacitus has already told us in the character sketch that his modesty was 'put on', that inside he craved supreme power, and that even his hard work was harmful because it was feigned for a throne; so the reader is taught to see the rescue as an investment that bought Tiberius' trust. Both writers leave no doubt of the verdict, but Virgil shows a monster and Tacitus unmasks a performer, and that difference is also the difference between epic and history.",
+    scheme:["Top marks: a clear answer to the question; specific detail from both passages; the detail is explained, not listed; a concluding sentence that returns to the question.","Middle: both villains used, but the comparison is asserted rather than shown, or one side is much thinner.","Low: description of one villain, or details with no link to the question."]
+  },
+
+  /* ---------- Guidance panel (booklet 1 only) ---------- */
+  guidance:{
+    title:"Answering the short questions: what the examiners reward",
+    intro:"Everything below comes from the Eduqas mark schemes, the examiners' reports and the board's marking guidance. Read it once now, and again before each set of questions.",
+    items:[
+      { h:"Read the line reference, and stay inside it",
+        p:"Every question names the lines it is about (<i>lines 15–17</i>). The examiners say that every year 'excellent, perceptive answers' earn nothing because they use material from outside those lines. Before you write, put a finger on the first word and the last word of the reference." },
+      { h:"Answer in English unless the question asks for Latin",
+        p:"The instruction at the front of the paper is 'answer in English'. Quote Latin only when the question says <i>refer to the Latin</i> or <i>pick out the Latin word</i>. In a plain content question, Latin on its own without a translation earns nothing." },
+      { h:"Marks are points: count them",
+        p:"In content questions there is usually one mark for each Latin word or short phrase that carries a fact. If the question is worth 3, give three separate details; if it says <i>give two</i>, give two. Extra correct details do no harm on a 'give details' question, but a wrong one among them can lose a mark on some question types, so do not pad." },
+      { h:"'Pick out and translate'",
+        p:"Copy the Latin word exactly as it is printed, then translate it. Two marks: one for the right word, one for its meaning. If the word is a comparative or superlative, the second mark is for getting that degree into the English ('more', '-est')." },
+      { h:"Style questions (4, 6 or 8 marks): quote, translate, explain, link",
+        p:"These are the questions that separate the top grades. The examiners' formula is: <b>quote the Latin, translate it, say what the writer has done with it, and link it to the terms of the question</b>. Naming a technique (alliteration, chiasmus) is not essential and earns nothing by itself; 'the author emphasises these words' is not enough either. Ask instead: why these words? what do they add? do they link back to something else? Aim for one clear point per two marks: three points for 6 marks, four for 8. Each point on a separate line. Word choice is a valid point: why did the author choose that particular word?" },
+      { h:"'What impression...?', 'What do you think...?', 'Explain why...'",
+        p:"These are evaluation questions (AO3). A fact alone gains nothing; the explanation is what earns the mark. Give the impression or the judgement, then the reason, and tie the reason to the lines named. Where the question says <i>give one reason</i>, one well-explained reason beats three vague ones." },
+      { h:"The 16-mark essay",
+        p:"You must refer to at least <b>four</b> of the texts and pictures in the Resource Booklet, or you cannot get above Band 3 for knowledge. Latin quotation is 'out of place' in the essay and earns nothing; refer to details in English. Every example must be linked to the question: what does it show about the hero, the villain, the statement you were given? A counter-argument helps ('but...'), a brief conclusion always helps, and a long introduction that repeats the question, or a conclusion that repeats the essay, wastes time. In the exam booklet the seven texts are three heroes (Horatius, Augustus, Camilla) and four villains (Antony, Sempronia, Sejanus, Mezentius): learn which is which." },
+      { h:"In this booklet",
+        p:"Each note you open gives you three sentences: one for a style question, one for a content or impression question, and one for the essay. They are models of the shape, not lines to learn. When you answer the questions at the end of each passage, write your answer first, then press <i>Reveal</i> to see the model and mark yourself. Your marks and your answers are saved for your teacher." }
+    ]
+  }
+};
+
+</script>
+<script>
+/* ===================== helpers ===================== */
+const $=id=>document.getElementById(id);
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function stripHtml(s){ const d=document.createElement('div'); d.innerHTML=String(s||'').replace(/<br\s*\/?>/gi,' '); return (d.textContent||'').replace(/\s+/g,' ').trim(); }
+const CATNAME={ order:"Word order & position", sound:"Sound & rhythm", structure:"Sentence shape & syntax", word:"Choice of words", context:"Fact & context (AO2)" };
+const TYPENAME={ content:"Content", latin:"Pick out the Latin", style:"Style", interp:"Impression / judgement", essay:"Essay paragraph" };
+
+/* ===================== state & cloud ===================== */
+const CLOUD={ endpoint:"https://vestigia-store.mrbeasley930.workers.dev", token:"vp_8c7103b52959b06cb55526bf", book:BOOKLET.book };
+const LESSON={ id:BOOKLET.id, title:"Booklet "+BOOKLET.num+" — "+stripHtml(BOOKLET.title)+": "+stripHtml(BOOKLET.subtitle) };
+const FIXEDCLS="TUTOR";
+let IDENTITY=null;
+let state={ answers:{}, marks:{}, revealed:{}, read:{}, pnotes:{}, rag:"", opened:{} };
+function userKey(){ return IDENTITY?(IDENTITY.cls+"::"+IDENTITY.cand):"anon"; }
+function fullKey(){ return CLOUD.book+"::"+userKey(); }
+function storeKey(){ return "hv_booklet_"+BOOKLET.num+"_"+(IDENTITY?(IDENTITY.cls+"_"+IDENTITY.cand):"default"); }
+function safeGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function safeSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+const CloudStore={
+  async pull(){ if(!IDENTITY) return {ok:false};
+    try{ const r=await fetch(CLOUD.endpoint+"?key="+encodeURIComponent(fullKey()),{headers:{"x-vestigia-token":CLOUD.token}});
+      if(r.status===404) return {ok:true,data:null}; if(!r.ok) return {ok:false};
+      const j=await r.json(); return {ok:true,data:(j&&j.data)?j.data:null}; }catch(e){ return {ok:false}; } },
+  async push(blob){ if(!IDENTITY) return false;
+    try{ const r=await fetch(CLOUD.endpoint,{method:"POST",headers:{"x-vestigia-token":CLOUD.token,"Content-Type":"application/json"},
+      body:JSON.stringify({key:fullKey(),cls:IDENTITY.cls,cand:IDENTITY.cand,book:CLOUD.book,data:blob,savedAt:new Date().toISOString()})}); return r.ok; }catch(e){ return false; } }
+};
+function mergeState(remote){ if(!remote) return; for(const k of ['answers','marks','revealed','read','pnotes','opened']){ state[k]=Object.assign({},state[k]||{},remote[k]||{}); } if(remote.rag) state.rag=remote.rag; }
+function loadLocal(){ try{ const s=JSON.parse(safeGet(storeKey())||"null"); if(s) mergeState(s); }catch(e){} }
+let _mt=null;
+function save(){ safeSet(storeKey(),JSON.stringify(state)); if(!IDENTITY) return; setSync("saving"); clearTimeout(_mt);
+  _mt=setTimeout(async()=>{ const ok=await CloudStore.push(cloudSummary()); setSync(ok?"cloud":"offline"); },700); }
+function setSync(s){ const el=$('savestatus'); if(!el) return;
+  const map={ saving:["saving…","#e2cb92"], cloud:["✓ saved to class store","#8fd8a6"], offline:["saved on this device — will sync when online","#f0c766"], device:["saved on this device","#8fd8a6"] };
+  const m=map[s]||map.device; el.textContent=m[0]; el.style.color=m[1]; }
+
+/* ===================== summary for the tracker ===================== */
+function allQ(){ const out=[]; BOOKLET.passages.forEach(p=>p.questions.forEach(q=>out.push({pid:p.id,q,key:p.id+'_'+q.id,sec:p.short}))); out.push({pid:'syn',q:{id:'syn',marks:BOOKLET.synthesis.marks,type:'essay',q:BOOKLET.synthesis.q,model:BOOKLET.synthesis.model,scheme:BOOKLET.synthesis.scheme},key:'syn_syn',sec:BOOKLET.synthesis.title}); return out; }
+function cloudSummary(){
+  const sections={}; let got=0,max=0,answered=0,total=0;
+  const detail=[];
+  const groups={}; BOOKLET.passages.forEach(p=>groups[p.id]={name:p.short,answered:0,of:p.questions.length,marks:0,max:0,notesRead:Object.keys(p.notes).filter(k=>state.read[p.id+'_'+k]).length,notesTotal:Object.keys(p.notes).length});
+  groups.syn={name:"Together",answered:0,of:1,marks:0,max:0,notesRead:0,notesTotal:0};
+  allQ().forEach(it=>{ const a=(state.answers[it.key]||'').trim(); const mk=state.marks[it.key]; const g=groups[it.pid];
+    total++; g.max+=it.q.marks; max+=it.q.marks; if(a){ answered++; g.answered++; } if(mk!=null){ g.marks+=mk; got+=mk; }
+    detail.push({ id:it.key, s:it.pid, sec:it.sec, type:it.q.type, marks:it.q.marks, lat:stripHtml(it.q.q), a:a, m:stripHtml(it.q.model), mk:(mk==null?null:mk), revealed:state.revealed[it.key]||null, opened:state.opened[it.key]||null }); });
+  for(const k in groups){ sections[k]={pts:groups[k].marks,max:groups[k].max,answered:groups[k].answered,of:groups[k].of,notesRead:groups[k].notesRead,notesTotal:groups[k].notesTotal,name:groups[k].name}; }
+  return { name:(IDENTITY?IDENTITY.cand:''), lesson:LESSON.id, title:LESSON.title, book:CLOUD.book, booklet:BOOKLET.num,
+    coreGot:got, coreTot:max, answered:answered, total:total, rag:(state.rag||''), pnotes:state.pnotes||{},
+    sections:sections, detail:detail, text:summaryText(groups,got,max,answered,total), savedAt:new Date().toISOString(), state:state };
+}
+function summaryText(g,got,max,answered,total){ let out=LESSON.title+"\n"; for(const k in g){ out+="  "+g[k].name+": "+g[k].answered+"/"+g[k].of+" answered, self-marked "+g[k].marks+"/"+g[k].max+(g[k].notesTotal?(", notes read "+g[k].notesRead+"/"+g[k].notesTotal):"")+"\n"; }
+  out+="Total: "+answered+"/"+total+" answered, "+got+"/"+max+" self-marked\n"; if(state.rag) out+="Confidence: "+state.rag+"\n"; return out; }
+
+/* ===================== render ===================== */
+function renderHeader(){ $('h-series').innerHTML=BOOKLET.series; $('h-title').innerHTML=BOOKLET.title; $('h-sub').innerHTML=BOOKLET.subtitle; $('h-strap').innerHTML=BOOKLET.strap; $('h-bookno').textContent="BOOKLET "+BOOKLET.num; document.title=stripHtml("Heroes B"+BOOKLET.num+" — "+BOOKLET.title+": "+BOOKLET.subtitle); $('foot').innerHTML="Heroes and Villains · Booklet "+BOOKLET.num+" · Mr Beasley · saves to the class store as <b>"+esc(CLOUD.book)+"</b>"; }
+
+const TABS=[{id:'guide',label:'Guide'}].concat(BOOKLET.passages.map(p=>({id:p.id,label:p.short}))).concat([{id:'syn',label:'Together'}]);
+function renderTabs(){ $('tabs').innerHTML=TABS.map(t=>'<button class="tab" data-tab="'+t.id+'" onclick="go(\''+t.id+'\')">'+t.label+'<span class="done" id="tabdone-'+t.id+'"></span></button>').join(''); }
+function go(id){ document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active')); document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  const p=$('p-'+id); if(p) p.classList.add('active'); const b=document.querySelector('.tab[data-tab="'+id+'"]'); if(b) b.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); closeSheet(); }
+
+function latHtml(pid,lat,ln){
+  const start=parseInt(ln)||0; let k=0;
+  let s=lat.replace(/\[\[(\w+)\|([\s\S]*?)\]\]/g,(m,id,txt)=>{ const n=BOOKLET.passages.find(p=>p.id===pid).notes[id]; const cat=n?n.cat:'word'; const rk=state.read[pid+'_'+id]?' read':''; return '<mark class="hl '+cat+rk+'" data-note="'+id+'" data-pid="'+pid+'" tabindex="0" role="button">'+txt+'</mark>'; });
+  s=s.replace(/ \/ /g,()=>{ k++; return '<span class="lb" data-n="'+(start+k)+'"></span>'; });
+  return s;
+}
+function renderGuide(){
+  const g=BOOKLET.guidance;
+  let h='<section class="panel" id="p-guide"><div class="card">';
+  h+='<div class="ref">'+esc(stripHtml(BOOKLET.series))+'</div><h2>How this booklet works</h2>';
+  h+='<p>Three passages, each set out with the Latin on the left and a translation on the right. The coloured phrases in the Latin are the places where a question can be asked: tap one and its note opens beside the text, with what the writer did, the effect, and three model sentences showing how that point would be written in each kind of exam question. At the end of each passage there are exam-style questions. Answer, press <b>Reveal</b>, mark yourself. Everything saves to the class store and follows you to any device.</p>';
+  h+='<div class="legend">'+Object.keys(CATNAME).map(c=>'<span class="lg"><span class="sw '+c+'"></span>'+CATNAME[c]+'</span>').join('')+'</div>';
+  h+='<div class="themebox">'+BOOKLET.themeNote+'</div>';
+  h+='</div>';
+  if(g){ h+='<div class="card"><h2>'+g.title+'</h2><p class="small">'+g.intro+'</p>'+g.items.map(it=>'<div class="gitem"><h4>'+it.h+'</h4><p>'+it.p+'</p></div>').join('')+'</div>'; }
+  h+='</section>'; return h;
+}
+function renderPassage(p){
+  let h='<section class="panel" id="p-'+p.id+'"><div class="card">';
+  h+='<div class="ref">'+p.author+' · '+p.work+' · '+p.lines+'</div><h2>'+p.heading+'</h2>';
+  h+='<p>'+p.intro+'</p>';
+  if(p.facts&&p.facts.length){ h+='<details class="facts"><summary>The facts the examiner can ask for</summary><table>'+p.facts.map(f=>'<tr><th>'+f[0]+'</th><td>'+f[1]+'</td></tr>').join('')+'</table></details>'; }
+  h+='<div class="progress"><span>Notes opened: <b id="nr-'+p.id+'">0</b>/'+Object.keys(p.notes).length+'</span><span>Questions answered: <b id="qa-'+p.id+'">0</b>/'+p.questions.length+'</span><span>Self-marked: <b id="qm-'+p.id+'">0</b>/'+p.questions.reduce((a,q)=>a+q.marks,0)+'</span></div>';
+  h+='<div class="legend">'+Object.keys(CATNAME).map(c=>'<span class="lg"><span class="sw '+c+'"></span>'+CATNAME[c]+'</span>').join('')+'<span class="note">Tap a phrase to open its note.</span></div>';
+  h+='<div class="textwrap"><div class="text"><div class="thead"><span>Line</span><span>Latin</span><span>English</span></div>';
+  h+=p.rows.map(r=>'<div class="row"><div class="ln">'+r.ln+'</div><div class="lat">'+latHtml(p.id,r.lat,r.ln)+'</div><div class="en">'+r.en+'</div></div>').join('');
+  h+='</div>';
+  h+='<aside class="npanel" id="np-'+p.id+'"><div class="nhead"><b>Note</b><span class="cnt" id="ncnt-'+p.id+'"></span><button class="btn nclose" onclick="closeSheet()">Close</button></div><div class="nbody" id="nb-'+p.id+'"><p class="empty">Tap any coloured phrase in the Latin to read its note here.</p></div></aside>';
+  h+='</div>';
+  h+='<h3>Exam-style questions on this passage</h3><p class="small">Write your answer first. Then reveal the model, compare, and give yourself a mark. Stay inside the lines each question names.</p>';
+  h+=p.questions.map((q,i)=>renderQ(p.id,q,i+1)).join('');
+  h+='<h3>My notes on this passage</h3><textarea data-pnotes="'+p.id+'" placeholder="Anything from the session: questions, things to check, phrases to learn..." style="min-height:80px"></textarea>';
+  h+='</div></section>'; return h;
+}
+function renderQ(pid,q,n){
+  const key=pid+'_'+q.id;
+  let h='<div class="q" id="q-'+key+'"><div class="qtop"><span class="qn">'+(pid==='syn'?'':(n+'. '))+'</span><span class="qm">'+q.marks+' mark'+(q.marks===1?'':'s')+'</span><span class="qt">'+(TYPENAME[q.type]||q.type)+'</span></div>';
+  h+='<div class="qtext">'+q.q+'</div>';
+  h+='<textarea data-q="'+key+'" placeholder="'+(q.type==='style'?'Point 1: quote the Latin, translate it, say what the writer does, give the effect...':(q.type==='latin'?'Latin word — translation':'Your answer, in English...'))+'"></textarea>';
+  h+='<div class="qbar"><button class="btn rev" onclick="reveal(\''+key+'\')" id="rv-'+key+'">Reveal model answer</button><span class="wc" id="wc-'+key+'"></span><span class="unlock" id="ul-'+key+'" style="display:none" onclick="unlock(\''+key+'\')">unlock to improve my answer</span></div>';
+  h+='<div class="model" id="md-'+key+'"><div class="mh">Model answer</div><div class="mtext">'+q.model+'</div>';
+  if(q.scheme&&q.scheme.length){ h+='<div class="mh">How it is marked</div><ul>'+q.scheme.map(s=>'<li>'+s+'</li>').join('')+'</ul>'; }
+  h+='<div class="selfmark"><span>My mark:</span>'+Array.from({length:q.marks+1},(_,i)=>'<button class="mk" data-key="'+key+'" data-v="'+i+'" onclick="setMark(\''+key+'\','+i+')">'+i+'</button>').join('')+'<span class="small" id="mkmsg-'+key+'"></span></div>';
+  h+='</div></div>'; return h;
+}
+function renderSyn(){
+  const s=BOOKLET.synthesis;
+  let h='<section class="panel" id="p-syn"><div class="card"><div class="ref">Across the booklet</div><h2>'+s.title+'</h2><p>'+s.intro+'</p>';
+  h+=renderQ('syn',{id:'syn',marks:s.marks,type:'essay',q:s.q,model:s.model,scheme:s.scheme},1);
+  h+='<h3>How confident do you feel about these three passages?</h3><div class="rag"><button class="r" onclick="setRag(\'Red\')">Red — not yet</button><button class="a" onclick="setRag(\'Amber\')">Amber — getting there</button><button class="g" onclick="setRag(\'Green\')">Green — confident</button></div>';
+  h+='<p class="note" style="margin-top:12px">Your answers, marks and notes are saved automatically. Your teacher can see them in the tracker.</p>';
+  h+='</div></section>'; return h;
+}
+function renderAll(){ renderHeader(); renderTabs(); $('panels').innerHTML=renderGuide()+BOOKLET.passages.map(renderPassage).join('')+renderSyn(); bind(); restoreAll(); go('guide'); }
+
+/* ===================== notes ===================== */
+let CUR={};
+function bind(){
+  document.querySelectorAll('mark.hl').forEach(m=>{ m.addEventListener('click',()=>openNote(m.dataset.pid,m.dataset.note)); m.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openNote(m.dataset.pid,m.dataset.note);} }); });
+  document.querySelectorAll('textarea[data-q]').forEach(t=>{ t.addEventListener('input',()=>{ state.answers[t.dataset.q]=t.value; if(!state.opened[t.dataset.q]) state.opened[t.dataset.q]=new Date().toISOString(); wc(t.dataset.q); save(); updateProgress(); }); });
+  document.querySelectorAll('textarea[data-pnotes]').forEach(t=>{ t.addEventListener('input',()=>{ state.pnotes[t.dataset.pnotes]=t.value; save(); }); });
+}
+function noteOrder(pid){ return Object.keys(BOOKLET.passages.find(p=>p.id===pid).notes); }
+function openNote(pid,id){
+  const p=BOOKLET.passages.find(x=>x.id===pid); const n=p.notes[id]; if(!n) return;
+  CUR[pid]=id;
+  document.querySelectorAll('#p-'+pid+' mark.hl').forEach(m=>m.classList.toggle('on',m.dataset.note===id));
+  const mk=document.querySelector('#p-'+pid+' mark.hl[data-note="'+id+'"]');
+  if(!state.read[pid+'_'+id]){ state.read[pid+'_'+id]=true; if(mk) mk.classList.add('read'); save(); updateProgress(); }
+  const ids=noteOrder(pid), i=ids.indexOf(id);
+  let h='<span class="chip '+n.cat+'">'+CATNAME[n.cat]+'</span><div class="ntag">'+n.tag+'</div>';
+  h+='<div class="nlat">'+(mk?mk.innerHTML.replace(/<span class="lb"[^>]*><\/span>/g,' / '):'')+'</div><div class="ntr">'+n.tr+'</div>';
+  h+='<div class="nsec">What the writer does</div><p>'+n.what+'</p><div class="nsec">The effect</div><p>'+n.effect+'</p>';
+  h+='<div class="nsec">How it would be written in the exam</div>';
+  if(n.ex.style) h+='<div class="ex"><div class="exh"><span>Style question</span> · 4, 6 or 8 marks · quote, translate, explain, link</div><p>'+n.ex.style+'</p></div>';
+  if(n.ex.content) h+='<div class="ex"><div class="exh"><span>Content or impression question</span> · in English, from these lines</div><p>'+n.ex.content+'</p></div>';
+  if(n.ex.essay) h+='<div class="ex"><div class="exh"><span>16-mark essay</span> · in English, no Latin needed</div><p>'+n.ex.essay+'</p></div>';
+  h+='<div class="nnav"><button class="btn" '+(i<=0?'disabled':'')+' onclick="stepNote(\''+pid+'\',-1)">◀ Previous</button><button class="btn" '+(i>=ids.length-1?'disabled':'')+' onclick="stepNote(\''+pid+'\',1)">Next ▶</button></div>';
+  $('nb-'+pid).innerHTML=h; $('ncnt-'+pid).textContent=(i+1)+' of '+ids.length;
+  const np=$('np-'+pid); np.classList.add('open'); np.scrollTop=0;
+  if(window.innerWidth>900){ const r=np.getBoundingClientRect(); if(r.top<0||r.top>window.innerHeight-80) np.scrollIntoView({behavior:'smooth',block:'start'}); }
+}
+function stepNote(pid,d){ const ids=noteOrder(pid); const i=ids.indexOf(CUR[pid]); const j=i+d; if(j<0||j>=ids.length) return; openNote(pid,ids[j]); const mk=document.querySelector('#p-'+pid+' mark.hl[data-note="'+ids[j]+'"]'); if(mk&&window.innerWidth>900) mk.scrollIntoView({behavior:'smooth',block:'center'}); }
+function closeSheet(){ document.querySelectorAll('.npanel').forEach(n=>n.classList.remove('open')); }
+
+/* ===================== questions ===================== */
+function wc(key){ const t=document.querySelector('textarea[data-q="'+key+'"]'); const el=$('wc-'+key); if(!t||!el) return; const n=(t.value.trim().match(/\S+/g)||[]).length; el.textContent=n?(n+' word'+(n===1?'':'s')):''; }
+function reveal(key){ const t=document.querySelector('textarea[data-q="'+key+'"]');
+  if(t && !t.value.trim() && !state.revealed[key]){ if(!confirm('You have not written an answer yet. Reveal the model anyway?')) return; }
+  if(!state.revealed[key]){ state.revealed[key]=new Date().toISOString(); save(); }
+  showRevealed(key); }
+function showRevealed(key){ const md=$('md-'+key); if(md) md.classList.add('show'); const rv=$('rv-'+key); if(rv){ rv.textContent='Model answer shown'; rv.disabled=true; }
+  const t=document.querySelector('textarea[data-q="'+key+'"]'); if(t){ t.readOnly=true; } const ul=$('ul-'+key); if(ul) ul.style.display='inline';
+  const mk=state.marks[key]; document.querySelectorAll('.mk[data-key="'+key+'"]').forEach(b=>b.classList.toggle('on',mk!=null&&parseInt(b.dataset.v)===mk)); }
+function unlock(key){ const t=document.querySelector('textarea[data-q="'+key+'"]'); if(t){ t.readOnly=false; t.focus(); } const ul=$('ul-'+key); if(ul) ul.style.display='none'; state.opened[key+'_improved']=new Date().toISOString(); save(); }
+function setMark(key,v){ state.marks[key]=v; save(); document.querySelectorAll('.mk[data-key="'+key+'"]').forEach(b=>b.classList.toggle('on',parseInt(b.dataset.v)===v));
+  const q=allQ().find(x=>x.key===key); const el=$('mkmsg-'+key); if(el&&q){ el.textContent=(v===q.q.marks?'Full marks — make sure every point really matched the scheme.':(v===0?'Read the scheme again, then unlock and improve your answer.':'Which point was missing? Unlock and add it.')); } updateProgress(); }
+function setRag(v){ state.rag=v; save(); document.querySelectorAll('.rag button').forEach(b=>b.classList.toggle('on',b.textContent.startsWith(v))); }
+
+function restoreAll(){
+  document.querySelectorAll('textarea[data-q]').forEach(t=>{ t.value=state.answers[t.dataset.q]||''; wc(t.dataset.q); if(state.revealed[t.dataset.q]) showRevealed(t.dataset.q); });
+  document.querySelectorAll('textarea[data-pnotes]').forEach(t=>{ t.value=state.pnotes[t.dataset.pnotes]||''; });
+  document.querySelectorAll('mark.hl').forEach(m=>m.classList.toggle('read',!!state.read[m.dataset.pid+'_'+m.dataset.note]));
+  if(state.rag) document.querySelectorAll('.rag button').forEach(b=>b.classList.toggle('on',b.textContent.startsWith(state.rag)));
+  updateProgress();
+}
+function updateProgress(){
+  let answered=0,total=0,got=0,max=0;
+  BOOKLET.passages.forEach(p=>{ let a=0,m=0,mx=0; p.questions.forEach(q=>{ const k=p.id+'_'+q.id; total++; mx+=q.marks; if((state.answers[k]||'').trim()){ a++; answered++; } if(state.marks[k]!=null){ m+=state.marks[k]; got+=state.marks[k]; } }); max+=mx;
+    const nr=Object.keys(p.notes).filter(k=>state.read[p.id+'_'+k]).length;
+    $('nr-'+p.id).textContent=nr; $('qa-'+p.id).textContent=a; $('qm-'+p.id).textContent=m;
+    $('tabdone-'+p.id).textContent=(a===p.questions.length&&a>0)?' ✓':(a?(' '+a+'/'+p.questions.length):''); });
+  const sk='syn_syn'; total++; max+=BOOKLET.synthesis.marks; if((state.answers[sk]||'').trim()){ answered++; $('tabdone-syn').textContent=' ✓'; } else $('tabdone-syn').textContent=''; if(state.marks[sk]!=null) got+=state.marks[sk];
+  $('pill').textContent=answered+'/'+total+' answered · '+got+'/'+max+' self-marked';
+}
+
+/* ===================== sign-in gate ===================== */
+function showGate(){
+  const ov=document.createElement('div'); ov.id='rp-gate';
+  ov.style.cssText="position:fixed;inset:0;z-index:9999;background:rgba(8,8,14,.88);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;font-family:Georgia,serif;";
+  ov.innerHTML='<div style="max-width:440px;width:100%;background:linear-gradient(180deg,#f6eed6,#e6d6b4);border-top:6px solid #c69a3c;border-radius:14px;padding:26px 26px 22px;box-shadow:0 22px 60px rgba(0,0,0,.6);color:#2b2012;">'
+    +'<div style="font-size:12.5px;letter-spacing:2px;color:#8f3320;font-weight:700;">EDUQAS GCSE LATIN · HEROES &amp; VILLAINS · BOOKLET '+BOOKLET.num+'</div>'
+    +'<div style="font-size:23px;color:#7a2f1e;font-weight:800;margin:2px 0 3px;letter-spacing:.5px;">'+BOOKLET.title+': '+BOOKLET.subtitle+'</div>'
+    +'<div style="font-size:13px;color:#6b5636;margin-bottom:16px;font-style:italic;">'+BOOKLET.gateLine+'</div>'
+    +'<label style="font-size:13px;color:#7a2f1e;font-weight:700;">Class code</label>'
+    +'<input id="g-cls" autocomplete="off" value="'+FIXEDCLS+'" readonly tabindex="-1" style="width:100%;box-sizing:border-box;margin:5px 0 4px;padding:11px;border-radius:8px;border:1px solid #c9b686;background:#ece3cc;color:#2b2012;font-size:15px;font-family:Georgia,serif;cursor:default;">'
+    +'<div style="font-size:11.5px;color:#7a6e57;margin:0 0 12px;">Your class code is filled in for you — leave it as it is. <span id="g-unlock" style="text-decoration:underline;cursor:pointer;">teacher: change it</span></div>'
+    +'<label style="font-size:13px;color:#7a2f1e;font-weight:700;">Your name</label>'
+    +'<input id="g-cand" autocomplete="off" placeholder="e.g. Tom" style="width:100%;box-sizing:border-box;margin:5px 0 4px;padding:11px;border-radius:8px;border:1px solid #c9b686;background:#fbf6e6;color:#2b2012;font-size:15px;font-family:Georgia,serif;">'
+    +'<div id="g-err" style="color:#a12016;font-size:12.5px;min-height:17px;margin:3px 0 6px;"></div>'
+    +'<button id="g-go" style="width:100%;padding:12px;border:0;border-radius:8px;background:linear-gradient(135deg,#caa04a,#9a6b1e);color:#221806;font-weight:800;font-size:15px;cursor:pointer;font-family:Georgia,serif;letter-spacing:.5px;">Open the booklet</button>'
+    +'<div style="font-size:11.5px;color:#8a7048;margin-top:13px;line-height:1.5;">Use the <b>same spelling of your name</b> every time, so all your work lands in one place.</div>'
+    +'</div>';
+  document.body.appendChild(ov);
+  $('g-go').addEventListener('click',signIn);
+  ov.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); signIn(); } });
+  $('g-unlock').addEventListener('click',function(){ const c=$('g-cls'); c.removeAttribute('readonly'); c.removeAttribute('tabindex'); c.style.background='#fbf6e6'; c.style.cursor='text'; c.select(); this.parentNode.removeChild(this); });
+  const last=safeGet('hv_booklet_lastname'); if(last) $('g-cand').value=last;
+  $('g-cand').focus();
+}
+let _signingIn=false;
+async function signIn(){
+  const cls=($('g-cls').value||'').trim().toUpperCase(); const cand=($('g-cand').value||'').trim().replace(/\s+/g,' '); const err=$('g-err');
+  if(_signingIn) return;
+  if(!cls){ err.textContent='Enter your class code.'; return; }
+  if(!/^.{2,40}$/.test(cand)){ err.textContent='Please enter your name (2-40 characters).'; return; }
+  _signingIn=true; IDENTITY={cls,cand}; safeSet('hv_booklet_lastname',cand); $('g-go').textContent='Loading your work…'; $('g-go').disabled=true;
+  loadLocal();
+  const res=await Promise.race([CloudStore.pull(), new Promise(r=>setTimeout(()=>r({ok:false}),6000))]);
+  if(res.ok&&res.data&&res.data.state) mergeState(res.data.state);
+  safeSet(storeKey(),JSON.stringify(state));
+  const g=$('rp-gate'); if(g) g.remove();
+  $('whoami').innerHTML='Signed in: <b>'+esc(IDENTITY.cls)+' · '+esc(IDENTITY.cand)+'</b>';
+  restoreAll(); setSync(res.ok?'cloud':'offline');
+  if(res.ok) save();
+}
+function signOut(){ IDENTITY=null; location.reload(); }
+
+renderAll();
+showGate();
+</script>
+</body>
+</html>
